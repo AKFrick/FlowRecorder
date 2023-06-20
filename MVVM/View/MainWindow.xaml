@@ -1,0 +1,49 @@
+﻿<Window x:Class="FlowRecorder.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:FlowRecorder"
+        xmlns:view="clr-namespace:FlowRecorder.MVVM.View"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="550">
+    
+    <!--Main grid-->
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="4*"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <!--Main-->
+        <Grid Grid.Column="0" Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <!--Side bar-->
+            <Grid Grid.Column="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Button Grid.Row="0" Height="50">Счетчики</Button>
+                <Button Grid.Row="1" Height="50">Настройки</Button>
+            </Grid>
+            
+            <!--Content-->
+            <Grid Grid.Column="1">
+                <view:Settings/>
+            </Grid>
+            
+            
+        </Grid>
+        
+        <!--Output-->
+        <Grid Grid.Row="1">
+            <view:Output/>
+        </Grid>
+
+    </Grid>
+</Window>
