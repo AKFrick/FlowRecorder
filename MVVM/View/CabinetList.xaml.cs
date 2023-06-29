@@ -14,11 +14,11 @@ using System.Windows.Shapes;
 namespace FlowRecorder.MVVM.View
 {
     /// <summary>
-    /// Interaction logic for BoxList.xaml
+    /// Interaction logic for CabinetList.xaml
     /// </summary>
-    public partial class BoxList : UserControl
+    public partial class CabinetList : UserControl
     {
-        public BoxList()
+        public CabinetList()
         {
             InitializeComponent();
         }

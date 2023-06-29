@@ -6,10 +6,10 @@
         xmlns:local="clr-namespace:FlowRecorder"
         xmlns:view="clr-namespace:FlowRecorder.MVVM.View"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="550">
+        Title="MainWindow" Height="600" Width="850">
     
     <!--Main grid-->
-    <Grid>
+    <Grid Background="#0E1520">
         <Grid.RowDefinitions>
             <RowDefinition Height="4*"/>
             <RowDefinition/>
@@ -27,17 +27,20 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
-                <Button Grid.Row="0" Height="50">Счетчики</Button>
+                <Button Grid.Row="0" Height="50" >Счетчики</Button>
                 <Button Grid.Row="1" Height="50">Настройки</Button>
+                <TextBlock Grid.Row="2" Height="50"
+                           Text="{Binding MyDescript, Mode=OneWay}"                           
+                           />
             </Grid>
             
             <!--Content-->
             <Grid Grid.Column="1">
-                <view:Settings/>
+                <view:CabinetList/>
             </Grid>
-            
-            
+                        
         </Grid>
         
         <!--Output-->
