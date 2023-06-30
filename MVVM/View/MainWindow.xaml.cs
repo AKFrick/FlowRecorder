@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using FlowRecorder.MVVM.Model;
+using FlowRecorder.MVVM.ViewModel;
 
 namespace FlowRecorder
 {
@@ -24,29 +25,10 @@ namespace FlowRecorder
         public MainWindow()
         {
             InitializeComponent();
-            this.DataContext = this;
+
+            MainWindowViewModel viewModel = new MainWindowViewModel();
+            this.DataContext = viewModel;
         }
-        public List<Cabinet> Cabinets { get; set; } = new List<Cabinet>() 
-        { 
-            new Cabinet() 
-            {
-                Description = "AC1H1",
-                Flowmeters = new List<Flowmeter>
-                {
-                    new Flowmeter() { Description = "Путь 101"},
-                    new Flowmeter() { Description = "Путь 102"}
-                }
-            }, 
-            new Cabinet() 
-            {
-                Description = "AC1H2",
-                Flowmeters = new List<Flowmeter>
-                {
-                    new Flowmeter() { Description = "Путь 201"},
-                    new Flowmeter() { Description = "Путь 202"}
-                }
-            }
-        };
-        public string MyDescript { get; set; } = "RABOTAET";
+       
     }
 }

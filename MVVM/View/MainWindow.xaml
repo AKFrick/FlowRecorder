@@ -18,7 +18,7 @@
         <!--Main-->
         <Grid Grid.Column="0" Grid.Row="0">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="140"/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
@@ -29,8 +29,19 @@
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
-                <Button Grid.Row="0" Height="50" >Счетчики</Button>
-                <Button Grid.Row="1" Height="50">Настройки</Button>
+                <Button Grid.Row="0" Height="80" Background="Transparent">
+                    <Image
+                        Width="70"
+                        Source="/MVVM/View/meter.png"
+                        Margin="5"                        
+                        />
+                </Button>
+                <Button Grid.Row="1" Height="80" Background="Transparent">
+                    <Image 
+                       Source="/MVVM/View/settings.png"
+                        Margin="5"    
+                        />
+                </Button>
                 <TextBlock Grid.Row="2" Height="50"
                            Text="{Binding MyDescript, Mode=OneWay}"                           
                            />
@@ -40,7 +51,6 @@
             <Grid Grid.Column="1">
                 <view:CabinetList/>
             </Grid>
-                        
         </Grid>
         
         <!--Output-->
