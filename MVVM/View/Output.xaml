@@ -7,6 +7,43 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <Button>Вывод</Button>
+        <DataGrid Name="Log" 
+                  Width="Auto"
+                  Height="Auto"
+                  RowBackground="White" AlternatingRowBackground="#f7f6f2"
+                  BorderBrush="Gray" BorderThickness="1"
+                  IsReadOnly="True" 
+                  AreRowDetailsFrozen="True" FrozenColumnCount="2"
+                  CanUserReorderColumns="False"
+                  CanUserResizeColumns="False"
+                  CanUserAddRows="False"
+                  CanUserResizeRows="False"
+                  CanUserDeleteRows="False"                  
+                  CanUserSortColumns = "False"
+                  SelectionMode="Single"
+                  SelectionUnit="FullRow"
+                  AutoGenerateColumns="False"
+                  FontSize="12"                  
+                  HorizontalContentAlignment="Center"
+                  VerticalContentAlignment="Center"                  
+                  ItemsSource="{Binding OutputItems}"
+                  IsSynchronizedWithCurrentItem="False"
+                  HeadersVisibility="None"
+                  >
+
+            <DataGrid.ColumnHeaderStyle>
+                <Style TargetType="{x:Type DataGridColumnHeader}">
+                    <Setter Property="FontWeight"  Value="Bold" />
+                    <Setter Property="HorizontalAlignment" Value="Stretch" />
+                    <Setter Property="HorizontalContentAlignment" Value="Center" />
+                </Style>
+            </DataGrid.ColumnHeaderStyle>
+
+            <DataGrid.Columns>
+                <!--Показать эти колонки-->
+                <DataGridTextColumn Header="Время" Width="180" Binding="{Binding TimeStamp}"/>
+                <DataGridTextColumn Header="Сообщение" Width="*" Binding="{Binding Message}"/>
+            </DataGrid.Columns>
+        </DataGrid>
     </Grid>
 </UserControl>
