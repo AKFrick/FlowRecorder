@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text;
 
 namespace FlowRecorder.MVVM.Model
@@ -11,7 +12,9 @@ namespace FlowRecorder.MVVM.Model
         }
         public string Description { get; set; }
 
-        public List<Flowmeter> Flowmeters { get; set; }
+        public ObservableCollection<Flowmeter> Flowmeters { get; set; }
+
+        public ObservableCollection<Flowmeter> Densitymeters { get; set; }
 
 
     }

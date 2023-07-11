@@ -6,13 +6,19 @@
         xmlns:local="clr-namespace:FlowRecorder"
         xmlns:view="clr-namespace:FlowRecorder.MVVM.View"
         mc:Ignorable="d"
-        Title="MainWindow" Height="600" Width="850">
+        Title="MainWindow" Height="600" Width="850"
+        WindowStartupLocation="CenterScreen"
+        
+        >
+    
+
     
     <!--Main grid-->
-    <Grid Background="#0E1520">
+    <Grid Background="#0E1520"> 
         <Grid.RowDefinitions>
             <RowDefinition Height="4*"/>
-            <RowDefinition/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="70"/>
         </Grid.RowDefinitions>
 
         <!--Main-->
@@ -29,7 +35,10 @@
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
+                
+                <!--Кнопка список шкафов-->
                 <Button Grid.Row="0" Height="80" Background="Transparent"
+                        BorderThickness="0"
                         Command="{Binding MyCommand}"
                         >
                     <Image
@@ -38,10 +47,16 @@
                         Margin="5"                        
                         />
                 </Button>
-                <Button Grid.Row="1" Height="80" Background="Transparent">
+
+                <!--Кнопка настройки-->
+                <Button Grid.Row="1" Height="80" Background="Transparent"
+                        Command="{Binding AddCabinet}"   
+                        BorderThickness="0"
+                        >
                     <Image 
                        Source="/MVVM/View/settings.png"
                        Margin="5"    
+                       
                         />
                 </Button>
                 <TextBlock Grid.Row="2" Height="50"
@@ -54,9 +69,17 @@
                 <view:CabinetList/>
             </Grid>
         </Grid>
-        
+
+        <GridSplitter  Grid.Row="1" 
+                       Height="5" 
+                       HorizontalAlignment="Stretch" 
+                       VerticalAlignment="Center"
+                       BorderThickness="0"
+                       Background="Transparent"
+                       />
+
         <!--Output-->
-        <Grid Grid.Row="1">
+        <Grid Grid.Row="2">
             <view:Output/>
         </Grid>
 

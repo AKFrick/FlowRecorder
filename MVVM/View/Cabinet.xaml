@@ -44,6 +44,7 @@
             <ListBox 
                 ItemsSource="{Binding Flowmeters}"
                 Background="Transparent"
+                BorderThickness="0"
                 >
                 <ListBox.ItemTemplate>
                     <DataTemplate>
@@ -59,13 +60,13 @@
                 TextAlignment ="Center"
                 Text="Добавьте расходомер"
                 />
-
-
         </StackPanel>
         
         <!--Densitymeters-->
         <StackPanel Grid.Row="2" Grid.Column="1">
             <ListBox
+                BorderThickness="0"
+                ItemsSource="{Binding Densitymeters}"
                 Background="Transparent"
                 >
                 <ListBox.ItemTemplate>

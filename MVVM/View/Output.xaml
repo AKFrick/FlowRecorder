@@ -5,12 +5,21 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:FlowRecorder.MVVM.View"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="450" d:DesignWidth="800"
+             >
+    
+    <UserControl.Resources>
+        <Style TargetType="{x:Type TextBlock}" x:Key="DataGridCellTextWrap">
+            <Setter Property="TextBlock.TextWrapping" Value="Wrap"></Setter>
+        </Style>
+    </UserControl.Resources>
+    
     <Grid>
         <DataGrid Name="Log" 
                   Width="Auto"
                   Height="Auto"
-                  RowBackground="White" AlternatingRowBackground="#f7f6f2"
+                  RowBackground="Transparent" AlternatingRowBackground="Transparent"
+                  Foreground="White"
                   BorderBrush="Gray" BorderThickness="1"
                   IsReadOnly="True" 
                   AreRowDetailsFrozen="True" FrozenColumnCount="2"
@@ -29,6 +38,7 @@
                   ItemsSource="{Binding OutputItems}"
                   IsSynchronizedWithCurrentItem="False"
                   HeadersVisibility="None"
+                  Background="Transparent"
                   >
 
             <DataGrid.ColumnHeaderStyle>
@@ -41,8 +51,8 @@
 
             <DataGrid.Columns>
                 <!--Показать эти колонки-->
-                <DataGridTextColumn Header="Время" Width="180" Binding="{Binding TimeStamp}"/>
-                <DataGridTextColumn Header="Сообщение" Width="*" Binding="{Binding Message}"/>
+                <DataGridTextColumn Header="Время" Width="180" Binding="{Binding TimeStamp}" ElementStyle="{StaticResource DataGridCellTextWrap}"/>
+                <DataGridTextColumn Header="Сообщение" Width="*" Binding="{Binding Message}" ElementStyle="{StaticResource DataGridCellTextWrap}"/>
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

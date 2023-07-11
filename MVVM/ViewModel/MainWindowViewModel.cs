@@ -35,35 +35,65 @@ namespace FlowRecorder.MVVM.ViewModel
             };
             #endregion
 
-            MyCommand = new RelayCommand( obj => OutputLog.That("Worked!"));
+            #region Command
+            MyCommand = new RelayCommand(obj =>
 
-            OutputLog.That("Первое сообщение");
+            {
+                OutputLog.That("Worked!");
+                Cabinets[0].Flowmeters.Add(new Flowmeter() { Description = "Путь 11" });
+            })
+            {
+
+            };
+            AddCabinet = new RelayCommand(obj =>
+            {
+                OutputLog.That("Worked!");
+                var cab = new Cabinet()
+                {
+                    Description = "AC1H1",
+                    Flowmeters = new ObservableCollection<Flowmeter>()
+                };
+
+                Cabinets.Add(cab);
+            });
+
+            #endregion
         }
 
         public ObservableCollection<LogItem> OutputItems { get; set; }
-        public List<Cabinet> Cabinets { get; set; } = new List<Cabinet>()
+        public ObservableCollection<Cabinet> Cabinets { get; set; } = new ObservableCollection<Cabinet>()
         {
             new Cabinet()
             {
-                Description = "AC1H1",
-                Flowmeters = new List<Flowmeter>
+                Description = "Путь",
+                Flowmeters = new ObservableCollection<Flowmeter>()
                 {
-                    new Flowmeter() { Description = "Путь 101"},
-                    new Flowmeter() { Description = "Путь 102"}
-                }
-            },
-            new Cabinet()
-            {
-                Description = "AC1H2",
-                Flowmeters = new List<Flowmeter>
+                    new Flowmeter() { Description = "Тест"},
+                    new Flowmeter() { Description = "Тест"},
+                    new Flowmeter() { Description = "Тест"},
+                    new Flowmeter() { Description = "Тест"},
+                    new Flowmeter() { Description = "Тест"},
+                    new Flowmeter() { Description = "Тест"},
+                    new Flowmeter() { Description = "Тест"},
+                    new Flowmeter() { Description = "Тест"},
+                    new Flowmeter() { Description = "Тест"},
+                    new Flowmeter() { Description = "Тест"},
+                    new Flowmeter() { Description = "Тест"},
+                    new Flowmeter() { Description = "Тест"},
+                    new Flowmeter() { Description = "Тест"}
+                },
+
+                Densitymeters = new ObservableCollection<Flowmeter>()
                 {
-                    new Flowmeter() { Description = "Путь 201"},
-                    new Flowmeter() { Description = "Путь 202"}
+                    new Flowmeter() { Description = "Test"}
                 }
+                
             }
         };
         public string MyDescript { get; set; } = "RABOTAET";
 
         public RelayCommand MyCommand { get; set; }
+        public RelayCommand AddCabinet { get; set; }
     }
 }
+
