@@ -13,5 +13,6 @@ namespace FlowRecorder.MVVM.Model
         public double AccumulatedValue { get; set; }
         public double InstantValue { get; set; }
 
+
     }
 }

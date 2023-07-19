@@ -10,9 +10,7 @@
         WindowStartupLocation="CenterScreen"
         
         >
-    
 
-    
     <!--Main grid-->
     <Grid Background="#0E1520"> 
         <Grid.RowDefinitions>
@@ -55,8 +53,7 @@
                         >
                     <Image 
                        Source="/MVVM/View/settings.png"
-                       Margin="5"    
-                       
+                       Margin="5"                           
                         />
                 </Button>
                 <TextBlock Grid.Row="2" Height="50"

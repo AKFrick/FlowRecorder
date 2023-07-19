@@ -53,10 +53,10 @@ namespace FlowRecorder.MVVM.ViewModel
                     Description = "AC1H1",
                     Flowmeters = new ObservableCollection<Flowmeter>()
                 };
-
+                cab.AddFlowmeterClicked += addFlowmeter;
                 Cabinets.Add(cab);
             });
-
+          
             #endregion
         }
 
@@ -68,12 +68,6 @@ namespace FlowRecorder.MVVM.ViewModel
                 Description = "Путь",
                 Flowmeters = new ObservableCollection<Flowmeter>()
                 {
-                    new Flowmeter() { Description = "Тест"},
-                    new Flowmeter() { Description = "Тест"},
-                    new Flowmeter() { Description = "Тест"},
-                    new Flowmeter() { Description = "Тест"},
-                    new Flowmeter() { Description = "Тест"},
-                    new Flowmeter() { Description = "Тест"},
                     new Flowmeter() { Description = "Тест"},
                     new Flowmeter() { Description = "Тест"},
                     new Flowmeter() { Description = "Тест"},
@@ -94,6 +88,11 @@ namespace FlowRecorder.MVVM.ViewModel
 
         public RelayCommand MyCommand { get; set; }
         public RelayCommand AddCabinet { get; set; }
+
+        private void addFlowmeter(Cabinet cabinet)
+        {
+            cabinet.Flowmeters.Add(new Flowmeter() { Description = "Worked!" });
+        }
     }
 }
 

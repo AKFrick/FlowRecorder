@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:FlowRecorder.MVVM.View"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    
+
     <Grid Background="Transparent">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="auto"/>
@@ -41,42 +41,48 @@
 
         <!--Flowmeters-->
         <StackPanel Grid.Row="2" Grid.Column="0">
-            <ListBox 
+            <ItemsControl 
                 ItemsSource="{Binding Flowmeters}"
                 Background="Transparent"
                 BorderThickness="0"
                 >
-                <ListBox.ItemTemplate>
+                <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <local:Flowmeter
                             Margin="10"
                         />
                     </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+            <Button
+                Background="Transparent"
+                BorderThickness="0"  
+                Command="{Binding AddFlowmeter}"
+                >
             <TextBlock
-                Foreground="#768C9E"
+                Foreground="White"
                 Width="300" Height="auto"
                 TextAlignment ="Center"
                 Text="Добавьте расходомер"
                 />
+            </Button>
         </StackPanel>
-        
+
         <!--Densitymeters-->
         <StackPanel Grid.Row="2" Grid.Column="1">
-            <ListBox
+            <ItemsControl
                 BorderThickness="0"
                 ItemsSource="{Binding Densitymeters}"
                 Background="Transparent"
                 >
-                <ListBox.ItemTemplate>
+                <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <local:Flowmeter
                             Margin="10"
                         />
                     </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
             <TextBlock
                 Foreground="#768C9E"
                 Width="300" Height="auto"
@@ -85,5 +91,4 @@
                 />
         </StackPanel>
     </Grid>
-    
 </UserControl>
