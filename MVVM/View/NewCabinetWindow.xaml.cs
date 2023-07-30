@@ -8,19 +8,21 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
+using FlowRecorder.MVVM.ViewModel;
 
 namespace FlowRecorder.MVVM.View
 {
     /// <summary>
-    /// Interaction logic for Flowmeter.xaml
+    /// Interaction logic for NewCabinetWindow.xaml
     /// </summary>
-    public partial class Flowmeter : UserControl
+    public partial class NewCabinetWindow : Window
     {
-        public Flowmeter()
+        public NewCabinetWindow(NewCabinetViewModel viewModel)
         {
             InitializeComponent();
+            viewModel.CabinetCreated += (cabinet) => Close();
+            DataContext = viewModel;
         }
     }
 }

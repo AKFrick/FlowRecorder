@@ -12,7 +12,7 @@
                 <ItemsControl ItemsSource="{Binding Cabinets}" Background="Transparent" ScrollViewer.CanContentScroll="False" BorderThickness="0">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <local:Cabinet/>
+                            <local:CabinetView/>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
@@ -22,7 +22,7 @@
                     Command="{Binding AddCabinet}"
                     >
                     <TextBlock 
-                        Foreground="White"
+                        Foreground="#768C9E"
                         >
                         Добавить ящик
                     </TextBlock>

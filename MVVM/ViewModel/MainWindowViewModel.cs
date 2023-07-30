@@ -9,6 +9,7 @@ using System.Windows.Media;
 using System.Configuration;
 using System.Windows;
 using System.Windows.Input;
+using FlowRecorder.MVVM.View;
 
 namespace FlowRecorder.MVVM.ViewModel
 {
@@ -35,63 +36,50 @@ namespace FlowRecorder.MVVM.ViewModel
             };
             #endregion
 
-            #region Command
-            MyCommand = new RelayCommand(obj =>
-
-            {
-                OutputLog.That("Worked!");
-                Cabinets[0].Flowmeters.Add(new Flowmeter() { Description = "Путь 11" });
-            })
-            {
-
-            };
-            AddCabinet = new RelayCommand(obj =>
-            {
-                OutputLog.That("Worked!");
-                var cab = new Cabinet()
-                {
-                    Description = "AC1H1",
-                    Flowmeters = new ObservableCollection<Flowmeter>()
-                };
-                cab.AddFlowmeterClicked += addFlowmeter;
-                Cabinets.Add(cab);
-            });
+            #region Command            
+            AddCabinet = new RelayCommand(obj => addCabinetClick());           
           
             #endregion
         }
 
         public ObservableCollection<LogItem> OutputItems { get; set; }
-        public ObservableCollection<Cabinet> Cabinets { get; set; } = new ObservableCollection<Cabinet>()
-        {
-            new Cabinet()
-            {
-                Description = "Путь",
-                Flowmeters = new ObservableCollection<Flowmeter>()
-                {
-                    new Flowmeter() { Description = "Тест"},
-                    new Flowmeter() { Description = "Тест"},
-                    new Flowmeter() { Description = "Тест"},
-                    new Flowmeter() { Description = "Тест"},
-                    new Flowmeter() { Description = "Тест"},
-                    new Flowmeter() { Description = "Тест"},
-                    new Flowmeter() { Description = "Тест"}
-                },
+        public ObservableCollection<Cabinet> Cabinets { get; set; } = new ObservableCollection<Cabinet>();
 
-                Densitymeters = new ObservableCollection<Flowmeter>()
-                {
-                    new Flowmeter() { Description = "Test"}
-                }
-                
-            }
-        };
-        public string MyDescript { get; set; } = "RABOTAET";
-
-        public RelayCommand MyCommand { get; set; }
         public RelayCommand AddCabinet { get; set; }
 
-        private void addFlowmeter(Cabinet cabinet)
+        void addCabinet(Cabinet cabinet)
         {
-            cabinet.Flowmeters.Add(new Flowmeter() { Description = "Worked!" });
+            cabinet.Flowmeters = new ObservableCollection<Flowmeter>();
+            cabinet.AddFlowmeterClicked += addFlowmeterClick;
+            Cabinets.Add(cabinet);
+            OutputLog.That($"Добавлен новый ящик: {cabinet.Description}");
+        }
+
+        void addCabinetClick()
+        {
+            NewCabinetViewModel viewModel = new NewCabinetViewModel();
+            viewModel.CabinetCreated += addCabinet;
+            NewCabinetWindow cabinetWindow = new NewCabinetWindow(viewModel);
+            cabinetWindow.ShowDialog();
+            
+        }
+
+
+        Cabinet editCabinet;
+        void addFlowmeter(Flowmeter flowmeter)
+        {
+            editCabinet.Flowmeters.Add(flowmeter);
+            OutputLog.That($"Добавлен новый расходомер: {flowmeter.Description}");
+        }
+
+        private void addFlowmeterClick(Cabinet cabinet)
+        {
+            editCabinet = cabinet;
+            NewFlowmeterViewModel model = new NewFlowmeterViewModel();
+            model.FlowmeterCreated += addFlowmeter;
+
+            NewFlowmeterWindow newFlowmeter = new NewFlowmeterWindow(model);
+            newFlowmeter.ShowDialog();            
         }
     }
 }
