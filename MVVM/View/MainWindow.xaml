@@ -48,7 +48,7 @@
 
                 <!--Кнопка настройки-->
                 <Button Grid.Row="1" Height="80" Background="Transparent"
-                        Command="{Binding AddCabinet}"   
+                        Command="{Binding Save}"   
                         BorderThickness="0"
                         >
                     <Image 
@@ -56,9 +56,6 @@
                        Margin="5"                           
                         />
                 </Button>
-                <TextBlock Grid.Row="2" Height="50"
-                           Text="{Binding MyDescript, Mode=OneWay}"                           
-                           />
             </Grid>
             
             <!--Content-->

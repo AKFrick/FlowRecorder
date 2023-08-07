@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:FlowRecorder.MVVM.View"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
-        Title="NewCabinetWindow" Height="450" Width="400">
+        Title="NewCabinetWindow" Height="200" Width="400">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>

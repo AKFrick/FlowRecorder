@@ -39,6 +39,19 @@
             Margin="5"
             FontSize="18"
             />
+        <Button
+            Grid.Row="1" Grid.Column="1"
+            Width="100"
+            HorizontalAlignment="Right"
+            Background="Transparent"
+            BorderThickness="0"              
+            Command="{Binding DestroyCabinet}"
+            >
+            <TextBlock
+                Foreground="#768C9E"                                                               
+                Text="Удалить ящик"
+                />
+        </Button>
 
         <!--Flowmeters-->
         <StackPanel Grid.Row="2" Grid.Column="0">

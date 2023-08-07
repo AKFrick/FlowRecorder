@@ -64,5 +64,23 @@
                 Content="м3/ч"
             />
         </StackPanel>
+
+        <Button
+            Width="70"
+            Height="20"
+            HorizontalAlignment="Right"
+            VerticalAlignment="Top"
+            Background="Transparent"
+            BorderThickness="0"  
+            Margin="5,5,10,5"
+            HorizontalContentAlignment="Right"
+            Command="{Binding DestroyFlowmeter}"
+            >
+            <TextBlock
+                Foreground="#768C9E"                  
+                Text="Удалить"
+                />
+        </Button>
+
     </Grid>
 </UserControl>
