@@ -37,30 +37,7 @@ namespace FlowRecorder.MVVM.ViewModel
                             OutputItems.Remove(item);
                     }));
             };
-            #endregion
-
-            using (StreamReader streamReader = new StreamReader("user.dat"))
-            {
-                BinaryFormatter binaryFormatter = new BinaryFormatter();
-                object obj;
-                try
-                {
-                    obj = binaryFormatter.Deserialize(streamReader.BaseStream);
-                    var cabs  = (List<SerializableCabinet>)obj;
-                    foreach (var cabinet in cabs)
-                    {
-                        Cabinet cab = new Cabinet()
-                        {
-                            Description = cabinet.Description
-                        };
-                        addCabinet(cab);
-                    }
-                }
-                catch (SerializationException ex)
-                {
-                    OutputLog.That(ex.ToString());
-                }
-            }
+            #endregion            
 
             Cabinets.CollectionChanged += (s, a) =>
             {
@@ -75,6 +52,44 @@ namespace FlowRecorder.MVVM.ViewModel
                         serializedCabinets.RemoveAll(obj => obj.Description == cabinet.Description);
                 }
             };
+
+            using (StreamReader streamReader = new StreamReader("user.dat"))
+            {
+                BinaryFormatter binaryFormatter = new BinaryFormatter();
+                object obj;
+                try
+                {
+                    obj = binaryFormatter.Deserialize(streamReader.BaseStream);
+                    var cabs = (List<SerializableCabinet>)obj;
+                    foreach (var bincabinet in cabs)
+                    {
+                        Cabinet cab = new Cabinet()
+                        {
+                            Description = bincabinet.Description
+                        };
+                        addCabinet(cab);
+                        OutputLog.That($"Расходомеров: {bincabinet.Flowmeters.Count}");
+
+                        editCabinet = cab;
+                        foreach (var binflowmeter in bincabinet.Flowmeters)
+                        {
+                            OutputLog.That("Расходомер!!");
+                            Flowmeter flow = new Flowmeter()
+                            {
+                                Description = binflowmeter.Description
+                            };
+                            addFlowmeter(flow);
+
+                        }
+                    }
+                }
+                catch (SerializationException ex)
+                {
+                    OutputLog.That(ex.ToString());
+                }
+            }
+
+
 
 
 
@@ -101,7 +116,7 @@ namespace FlowRecorder.MVVM.ViewModel
             // Сохранить объект в локальном файле.
             using (Stream fStream = new FileStream("user.dat",
                FileMode.Create, FileAccess.Write, FileShare.None))
-            {
+            {                
                 binFormat.Serialize(fStream, serializedCabinets);
             }
         }

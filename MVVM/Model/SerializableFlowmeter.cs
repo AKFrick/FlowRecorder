@@ -4,7 +4,7 @@ using System.Text;
 
 namespace FlowRecorder.MVVM.Model
 {
-    [Serializable]
+    [Serializable()]
     public class SerializableFlowmeter
     {
         public SerializableFlowmeter(Flowmeter flowmeter)

@@ -6,7 +6,7 @@ using System.Text;
 
 namespace FlowRecorder.MVVM.Model
 {
-    [Serializable]
+    [Serializable()]
     public class SerializableCabinet
     {
         public SerializableCabinet(Cabinet cab)
@@ -17,9 +17,12 @@ namespace FlowRecorder.MVVM.Model
             cab.Flowmeters.CollectionChanged += (s, a) =>
             {
                 if (a.NewItems?.Count >= 1)
-                {
+                {                    
                     foreach (Flowmeter item in a.NewItems)
+                    {
                         Flowmeters.Add(new SerializableFlowmeter(item));
+                        OutputLog.That($"Добавлен расходомер: {item.Description}");
+                    }    
                 }
                 if (a.OldItems?.Count >= 1)
                 {
