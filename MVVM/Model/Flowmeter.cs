@@ -11,11 +11,10 @@ namespace FlowRecorder.MVVM.Model
     {
         public Flowmeter()
         {
-            DestroyFlowmeter = new RelayCommand(obj => DestroyFlowmeterClicked?.Invoke(cabinet, this));
+            DestroyFlowmeter = new RelayCommand(obj => DestroyFlowmeterClicked?.Invoke(this));
         }
-
-        public Cabinet cabinet;
-        public Action<Cabinet, Flowmeter> DestroyFlowmeterClicked;
+        
+        public Action<Flowmeter> DestroyFlowmeterClicked;
         public string Description { get; set; }        
 
         public string Ip { get; set; } = "192.168.0.1";

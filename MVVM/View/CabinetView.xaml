@@ -71,7 +71,7 @@
             <Button
                 Background="Transparent"
                 BorderThickness="0"  
-                Command="{Binding AddFlowmeter}"
+                Command="{Binding AddFlowmeterCommand}"
                 >
             <TextBlock
                 Foreground="#768C9E"

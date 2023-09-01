@@ -54,54 +54,53 @@ namespace FlowRecorder.MVVM.ViewModel
                 }
             };
 
-            using (StreamReader streamReader = new StreamReader("user.dat"))
-            {
-                BinaryFormatter binaryFormatter = new BinaryFormatter();
-                object obj;
-                try
-                {
-                    obj = binaryFormatter.Deserialize(streamReader.BaseStream);
-                    var cabs = (List<SerializableCabinet>)obj;
-                    foreach (var bincabinet in cabs)
-                    {
-                        Cabinet cab = new Cabinet()
-                        {
-                            Description = bincabinet.Description
-                        };
-                        addCabinet(cab);
-                        OutputLog.That($"Расходомеров: {bincabinet.Flowmeters.Count}");
+            //using (StreamReader streamReader = new StreamReader("user.dat"))
+            //{
+            //    BinaryFormatter binaryFormatter = new BinaryFormatter();
+            //    object obj;
+            //    try
+            //    {
+            //        obj = binaryFormatter.Deserialize(streamReader.BaseStream);
+            //        var cabs = (List<SerializableCabinet>)obj;
+            //        foreach (var bincabinet in cabs)
+            //        {
+            //            Cabinet cab = new Cabinet()
+            //            {
+            //                Description = bincabinet.Description
+            //            };
+            //            addCabinet(cab);
+            //            OutputLog.That($"Расходомеров: {bincabinet.Flowmeters.Count}");
 
-                        editCabinet = cab;
-                        foreach (var binflowmeter in bincabinet.Flowmeters)
-                        {
-                            OutputLog.That("Расходомер!!");
-                            Flowmeter flow = new Flowmeter()
-                            {
-                                Description = binflowmeter.Description
-                            };
-                            addFlowmeter(flow);
+            //            editCabinet = cab;
+            //            foreach (var binflowmeter in bincabinet.Flowmeters)
+            //            {
+            //                OutputLog.That("Расходомер!!");
+            //                Flowmeter flow = new Flowmeter()
+            //                {
+            //                    Description = binflowmeter.Description
+            //                };
+            //                addFlowmeter(flow);
 
-                        }
-                    }
-                }
-                catch (SerializationException ex)
-                {
-                    OutputLog.That(ex.ToString());
-                }
-            }
+            //            }
+            //        }
+            //    }
+            //    catch (SerializationException ex)
+            //    {
+            //        OutputLog.That(ex.ToString());
+            //    }
+            //}
 
 
 
 
 
             #region Command            
-            Save = new RelayCommand(obj => SaveClick());
+            Save = new RelayCommand(obj => saveClick());
             AddCabinet = new RelayCommand(obj => addCabinetClick());
 
 
             #endregion
         }
-
         public ObservableCollection<LogItem> OutputItems { get; set; }
         public ObservableCollection<Cabinet> Cabinets { get; set; } = new ObservableCollection<Cabinet>();
         private List<SerializableCabinet> serializedCabinets { get; set; } = new List<SerializableCabinet>();
@@ -109,7 +108,7 @@ namespace FlowRecorder.MVVM.ViewModel
         public RelayCommand Save { get; set; }
 
         public RelayCommand AddCabinet { get; set; }
-        void SaveClick()
+        void saveClick()
         {
             BinaryFormatter binFormat = new BinaryFormatter();
             // Сохранить объект в локальном файле.
@@ -151,42 +150,16 @@ namespace FlowRecorder.MVVM.ViewModel
             
         }
         void addCabinet(Cabinet cabinet)
-        {
-            cabinet.Flowmeters = new ObservableCollection<Flowmeter>();
-            cabinet.AddFlowmeterClicked += addFlowmeterClick;
+        {            
             cabinet.DestroyCabinetClicked += DestroyCabinetClick;
             Cabinets.Add(cabinet);
             OutputLog.That($"Добавлен новый ящик: {cabinet.Description}");
         }
-
-        Cabinet editCabinet;
-        void addFlowmeter(Flowmeter flowmeter)
-        {
-            flowmeter.cabinet = editCabinet;
-            flowmeter.DestroyFlowmeterClicked += DestroyFlowmeterClick;
-            editCabinet.Flowmeters.Add(flowmeter);
-            OutputLog.That($"Добавлен новый расходомер: {flowmeter.Description}");
-        }
-
-        private void addFlowmeterClick(Cabinet cabinet)
-        {
-            editCabinet = cabinet;
-            NewFlowmeterViewModel model = new NewFlowmeterViewModel();
-            model.FlowmeterCreated += addFlowmeter;
-
-            NewFlowmeterWindow newFlowmeter = new NewFlowmeterWindow(model);
-            newFlowmeter.ShowDialog();            
-        }
+        Cabinet editCabinet;                
         private void DestroyCabinetClick(Cabinet cabinet)
         {
             Cabinets.Remove(cabinet);
-        }
-        private void DestroyFlowmeterClick(Cabinet cabinet, Flowmeter flowmeter)
-        {
-            cabinet.Flowmeters.Remove(flowmeter);
-        }
-
-        
+        }     
     }
 }
 
