@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using FlowRecorder.MVVM.Model;
+using FlowRecorder.MVVM.Db;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
@@ -105,8 +106,6 @@ namespace FlowRecorder.MVVM.ViewModel
         public ObservableCollection<Cabinet> Cabinets { get; set; } = new ObservableCollection<Cabinet>();
         private List<SerializableCabinet> serializedCabinets { get; set; } = new List<SerializableCabinet>();
 
-
-
         public RelayCommand Save { get; set; }
 
         public RelayCommand AddCabinet { get; set; }
@@ -119,6 +118,27 @@ namespace FlowRecorder.MVVM.ViewModel
             {                
                 binFormat.Serialize(fStream, serializedCabinets);
             }
+
+            using (AppDbContext  db = new AppDbContext())
+            {
+                MeterNode node = new MeterNode()
+                {
+                    NodeName = "Новое тестовое имя",
+                    NodeCode = 1,
+                    FlowMeterAddrIP = "192.168.10.1",
+                    DensityMeterAddrIP = "192.168.10.2",
+                    FlowMeterAddrModbus = 1,
+                    FlowUpdateTimeInterval = 5000,
+                    DensityUpdateTimeInterval = 6000,
+                    TimeIntervalRecording = 12000,
+                    FlowDeltaRecording = 500                    
+                };
+
+                db.MeterNode.Add(node);
+                db.SaveChanges();
+            }
+
+
         }
 
         //Добавить ящик
