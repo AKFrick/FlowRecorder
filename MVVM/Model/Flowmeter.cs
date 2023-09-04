@@ -1,5 +1,4 @@
-﻿using FlowRecorder.MVVM.ViewModel;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
@@ -11,7 +10,7 @@ namespace FlowRecorder.MVVM.Model
     {
         public Flowmeter()
         {
-            DestroyFlowmeter = new RelayCommand(obj => DestroyFlowmeterClicked?.Invoke(this));
+            //DestroyFlowmeter = new RelayCommand(obj => DestroyFlowmeterClicked?.Invoke(this));
         }
         
         public Action<Flowmeter> DestroyFlowmeterClicked;
@@ -23,8 +22,6 @@ namespace FlowRecorder.MVVM.Model
 
 
         public double AccumulatedValue { get; set; } = 0.0;
-        public double InstantValue { get; set; } = 0.0;
-
-        public RelayCommand DestroyFlowmeter { get; set; }
+        public double InstantValue { get; set; } = 0.0;        
     }
 }

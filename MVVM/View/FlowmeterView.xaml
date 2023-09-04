@@ -5,8 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:FlowRecorder.MVVM.View"
              mc:Ignorable="d" 
-             d:DesignHeight="90" d:DesignWidth="300"
-             Height="90" Width="300"
+             d:DesignHeight="120" d:DesignWidth="500"
+             Height="120" Width="500"
              >
     <Grid Background="#2B5278">
         <Grid.ColumnDefinitions>
@@ -21,7 +21,7 @@
             
             Foreground="White" 
             HorizontalAlignment="Left" VerticalAlignment="Top"
-            FontSize="14"
+            FontSize="24"
             Margin="10,5,5,5"
             />
 
@@ -33,12 +33,12 @@
                 Text="{Binding AccumulatedValue}" 
                 VerticalAlignment="Center"
                 Foreground="White"             
-                FontSize="40"
+                FontSize="65"
             />
 
             <Label
                 Foreground="White"             
-                FontSize="40"
+                FontSize="65"
                 Content="м3"
             />
 
@@ -54,13 +54,13 @@
                 Text="{Binding InstantValue}" 
                 Foreground="White" 
                 VerticalAlignment="Center"
-                FontSize="14"           
+                FontSize="20"           
             />
 
             <Label
                 Foreground="White"      
                 VerticalAlignment="Center"
-                FontSize="14"
+                FontSize="20"
                 Content="м3/ч"
             />
         </StackPanel>

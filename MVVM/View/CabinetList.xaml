@@ -23,6 +23,7 @@
                     >
                     <TextBlock 
                         Foreground="#768C9E"
+                        FontSize="20"
                         >
                         Добавить ящик
                     </TextBlock>

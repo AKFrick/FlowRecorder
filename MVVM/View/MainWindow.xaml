@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:FlowRecorder"
         xmlns:view="clr-namespace:FlowRecorder.MVVM.View"
         mc:Ignorable="d"
-        Title="MainWindow" Height="600" Width="850"
+        Title="MainWindow" Height="800" Width="1180"
         WindowStartupLocation="CenterScreen"
         
         >
@@ -16,7 +16,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="4*"/>
             <RowDefinition Height="auto"/>
-            <RowDefinition Height="70"/>
+            <RowDefinition Height="170"/>
         </Grid.RowDefinitions>
 
         <!--Main-->
