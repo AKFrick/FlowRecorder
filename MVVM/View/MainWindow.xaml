@@ -42,7 +42,7 @@
                         >
                     <Image
                         Width="70"
-                        Source="/MVVM/View/meter.png"
+                        Source="/Resources/meter.png"
                         Margin="5"                        
                         />
                 </Button>
@@ -53,21 +53,46 @@
                         BorderThickness="0"
                         >
                     <Image 
-                       Source="/MVVM/View/settings.png"
+                       Source="/Resources/settings.png"
                        Margin="5"                           
                         />
                 </Button>
 
-                <!--Кнопка сохранить-->
-                <Button Grid.Row="3" Height="80" Background="Transparent"
-                        Command="{Binding Save}"   
+
+                <StackPanel Grid.Row="3" Orientation="Vertical">
+                    <!--Кнопка сохранить-->
+                    <Button Height="80" Background="Transparent"
+                        Command="{Binding BtnSave}"   
                         BorderThickness="0"
                         >
-                    <Image 
-                       Source="/MVVM/View/settings.png"
+                        <Image 
+                       Source="/Resources/Save.png"
                        Margin="5"                           
                         />
-                </Button>
+                    </Button>
+
+                    <!--Кнопка начать читать-->
+                    <Button Height="80" Background="Transparent"
+                        Command="{Binding BtnStart}"   
+                        BorderThickness="0"
+                        >
+                        <Image 
+                       Source="/Resources/Play.png"
+                       Margin="5"                           
+                        />
+                    </Button>
+
+                    <!--Кнопка остановить чтение-->
+                    <Button Height="80" Background="Transparent"
+                        Command="{Binding BtnStop}"   
+                        BorderThickness="0"
+                        >
+                        <Image 
+                           Source="/Resources/Stop.png"
+                           Margin="5"                           
+                        />
+                    </Button>
+                </StackPanel>
             </Grid>
             
             

@@ -41,7 +41,6 @@
                 FontSize="65"
                 Content="м3"
             />
-
         </StackPanel>
 
         <StackPanel
@@ -49,14 +48,12 @@
             HorizontalAlignment="Right" VerticalAlignment="Bottom"
             Margin="5,5,10,5"
             >
-            
             <TextBlock 
                 Text="{Binding InstantValue}" 
                 Foreground="White" 
                 VerticalAlignment="Center"
                 FontSize="20"           
             />
-
             <Label
                 Foreground="White"      
                 VerticalAlignment="Center"
@@ -81,6 +78,5 @@
                 Text="Удалить"
                 />
         </Button>
-
     </Grid>
 </UserControl>

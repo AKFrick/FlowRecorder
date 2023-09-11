@@ -7,17 +7,37 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="MVVM\View\meter.png" />
-    <None Remove="MVVM\View\settings.png" />
+    <None Remove="Resources\meter.png" />
+    <None Remove="Resources\Play.png" />
+    <None Remove="Resources\Save.png" />
+    <None Remove="Resources\settings.png" />
+    <None Remove="Resources\Stop.png" />
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Resources\Play.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Save.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\meter.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\settings.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Stop.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="NModbus" Version="3.0.80" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="7.0.4" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Resource Include="MVVM\View\meter.png" />
-    <Resource Include="MVVM\View\settings.png" />
   </ItemGroup>
 
 </Project>

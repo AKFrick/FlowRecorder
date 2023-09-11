@@ -38,8 +38,9 @@ namespace FlowRecorder.MVVM.ViewModel
                             OutputItems.Remove(item);
                     }));
             };
-            #endregion            
+            #endregion
 
+            #region сериализация
             //Cabinets.CollectionChanged += (s, a) =>
             //{
             //    if (a.NewItems?.Count >= 1)
@@ -89,28 +90,35 @@ namespace FlowRecorder.MVVM.ViewModel
             //        OutputLog.That(ex.ToString());
             //    }
             //}
+            #endregion
 
             #region Command            
-            Save = new RelayCommand(obj => saveClick());
-            AddCabinet = new RelayCommand(obj => addCabinetClick());
+            BtnSave = new(obj => btnSaveClick());
+            BtnStart = new(obj => btnStartClick());
+            BtnStop = new(obj => btnStopClick());
+            AddCabinet = new(obj => addCabinetClick());
             #endregion
+
+            reader = new();
+            reader.ValueRead += msg => OutputLog.That(msg);
         }
+
+        DataReader reader;
         public ObservableCollection<LogItem> OutputItems { get; set; }
-        public ObservableCollection<CabinetViewModel> Cabinets { get; set; } = new ObservableCollection<CabinetViewModel>();
+        public ObservableCollection<CabinetViewModel> Cabinets { get; set; } = new ObservableCollection<CabinetViewModel>();        
         private List<SerializableCabinet> serializedCabinets { get; set; } = new List<SerializableCabinet>();
-        public RelayCommand Save { get; set; }
-        public RelayCommand AddCabinet { get; set; }
-        void saveClick()
+        public RelayCommand BtnSave { get; set; }
+        void btnSaveClick()
         {
             BinaryFormatter binFormat = new BinaryFormatter();
             // Сохранить объект в локальном файле.
             using (Stream fStream = new FileStream("user.dat",
                FileMode.Create, FileAccess.Write, FileShare.None))
-            {                
+            {
                 binFormat.Serialize(fStream, serializedCabinets);
             }
 
-            using (AppDbContext  db = new AppDbContext())
+            using (AppDbContext db = new AppDbContext())
             {
                 MeterNode node = new MeterNode()
                 {
@@ -122,17 +130,24 @@ namespace FlowRecorder.MVVM.ViewModel
                     FlowUpdateTimeInterval = 5000,
                     DensityUpdateTimeInterval = 6000,
                     TimeIntervalRecording = 12000,
-                    FlowDeltaRecording = 500                    
+                    FlowDeltaRecording = 500
                 };
 
                 db.MeterNode.Add(node);
                 db.SaveChanges();
-            }
-
-
+            }           
         }
-
-        //Добавить ящик
+        public RelayCommand BtnStart { get; set; }
+        void btnStartClick() 
+        {
+            reader.StartReading();          
+        }
+        public RelayCommand BtnStop { get; set; }
+        void btnStopClick()         
+        {
+            reader.StopReading();
+        }
+        public RelayCommand AddCabinet { get; set; }
         void addCabinetClick()
         {
             NewCabinetViewModel viewModel = new NewCabinetViewModel();
