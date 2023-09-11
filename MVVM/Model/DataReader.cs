@@ -31,7 +31,7 @@ namespace FlowRecorder.MVVM.Model
         ushort startAddress = 0;
         ushort numOfPoints = 6;
 
-        public event Action<string> ValueRead;
+        public event Action<Double> ValueRead;
 
         public async void StartReading()
         {
@@ -54,7 +54,7 @@ namespace FlowRecorder.MVVM.Model
                 {
                     ushort[] holding_register = master.ReadHoldingRegisters(slaveID, startAddress, numOfPoints);
 
-                    ValueRead?.Invoke(ModbusUtility.GetSingle(holding_register[4], holding_register[5]).ToString());
+                    ValueRead?.Invoke(ModbusUtility.GetSingle(holding_register[4], holding_register[5]));
 
                     if (ct.IsCancellationRequested)
                     {

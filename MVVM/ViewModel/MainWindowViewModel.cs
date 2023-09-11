@@ -92,20 +92,36 @@ namespace FlowRecorder.MVVM.ViewModel
             //}
             #endregion
 
+            cabinetsModel = new();
+
+            #region ящики
+            ((INotifyCollectionChanged)cabinetsModel).CollectionChanged += (s, a) =>
+            {
+                if (a.NewItems?.Count >= 1)
+                    Application.Current.Dispatcher.BeginInvoke(new Action(() =>
+                    {
+                        foreach (Cabinet item in a.NewItems)
+                            Cabinets.Add(new CabinetViewModel(item));
+                    }));
+                if (a.OldItems?.Count >= 1)
+                    Application.Current.Dispatcher.BeginInvoke(new Action(() =>
+                    {
+                        //foreach (Cabinet item in a.OldItems)
+                        //    Cabinets.Remove();
+                    }));
+            };
+            #endregion
+
             #region Command            
             BtnSave = new(obj => btnSaveClick());
             BtnStart = new(obj => btnStartClick());
             BtnStop = new(obj => btnStopClick());
             AddCabinet = new(obj => addCabinetClick());
-            #endregion
-
-            reader = new();
-            reader.ValueRead += msg => OutputLog.That(msg);
+            #endregion            
         }
-
-        DataReader reader;
         public ObservableCollection<LogItem> OutputItems { get; set; }
-        public ObservableCollection<CabinetViewModel> Cabinets { get; set; } = new ObservableCollection<CabinetViewModel>();        
+        public ObservableCollection<CabinetViewModel> Cabinets { get; set; } = new ObservableCollection<CabinetViewModel>();
+        ObservableCollection<Cabinet> cabinetsModel;
         private List<SerializableCabinet> serializedCabinets { get; set; } = new List<SerializableCabinet>();
         public RelayCommand BtnSave { get; set; }
         void btnSaveClick()
@@ -140,12 +156,13 @@ namespace FlowRecorder.MVVM.ViewModel
         public RelayCommand BtnStart { get; set; }
         void btnStartClick() 
         {
-            reader.StartReading();          
+            foreach (var cab in cabinetsModel)
+                 cab.Start();
         }
         public RelayCommand BtnStop { get; set; }
         void btnStopClick()         
         {
-            reader.StopReading();
+            
         }
         public RelayCommand AddCabinet { get; set; }
         void addCabinetClick()
@@ -155,10 +172,10 @@ namespace FlowRecorder.MVVM.ViewModel
             NewCabinetWindow cabinetWindow = new NewCabinetWindow(viewModel);
             cabinetWindow.ShowDialog();
         }
-        void addCabinet(CabinetViewModel cabinet)
+        void addCabinet(Cabinet cabinet)
         {            
-            cabinet.DestroyCabinetClicked += DestroyCabinetClick;
-            Cabinets.Add(cabinet);
+            //cabinet.DestroyCabinetClicked += DestroyCabinetClick;
+            cabinetsModel.Add(cabinet);
             OutputLog.That($"Добавлен новый ящик: {cabinet.Description}");
         }        
         private void DestroyCabinetClick(CabinetViewModel cabinet)

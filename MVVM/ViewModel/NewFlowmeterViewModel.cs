@@ -14,11 +14,11 @@ namespace FlowRecorder.MVVM.ViewModel
 {
     public class NewFlowmeterViewModel
     {
-        public FlowmeterViewModel NewFlowmeter { get; set; }
-        public event Action<FlowmeterViewModel> FlowmeterCreated;
+        public Flowmeter NewFlowmeter { get; set; }
+        public event Action<Flowmeter> FlowmeterCreated;
         public NewFlowmeterViewModel()
         {
-            NewFlowmeter = new FlowmeterViewModel();
+            NewFlowmeter = new Flowmeter();
             Create = new RelayCommand(obj =>
             {
                 FlowmeterCreated?.Invoke(NewFlowmeter);

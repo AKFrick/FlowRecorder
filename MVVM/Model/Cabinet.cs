@@ -10,7 +10,7 @@ namespace FlowRecorder.MVVM.Model
     {
         public Cabinet()
         {
-            Flowmeters = new ObservableCollection<Flowmeter>();
+            Flowmeters = new();
 
             //DestroyCabinet = new RelayCommand(obj => DestroyCabinetClicked?.Invoke(this));
 
@@ -19,20 +19,15 @@ namespace FlowRecorder.MVVM.Model
         }
         public void AddNewFlowmeter(Flowmeter flowmeter)
         {
-            flowmeter.DestroyFlowmeterClicked += DestroyFlowmeter;
             Flowmeters.Add(flowmeter);
         }
-
-        public Action<Cabinet> AddFlowmeterClicked;        
-        public string Description { get; set; }
-        public virtual ObservableCollection<Flowmeter> Flowmeters { get; set; }
-
-        public ObservableCollection<Flowmeter> Densitymeters { get; set; }
-        
-        void DestroyFlowmeter(Flowmeter flowmeter)
+        public void Start()
         {
-            Flowmeters.Remove(flowmeter);
+            foreach (Flowmeter flowmeter in Flowmeters)
+                flowmeter.Start();
         }
-        public Action<Cabinet> DestroyCabinetClicked;        
+        public string Description { get; set; }        
+        public ObservableCollection<Flowmeter> Flowmeters { get; set; }        
+       
     }
 }

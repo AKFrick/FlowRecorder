@@ -14,12 +14,12 @@ namespace FlowRecorder.MVVM.ViewModel
 {
     public class NewCabinetViewModel
     {
-        public CabinetViewModel NewCabinet { get; set; }
-        public event Action<CabinetViewModel> CabinetCreated;
+        public Cabinet NewCabinet { get; set; }
+        public event Action<Cabinet> CabinetCreated;
 
         public NewCabinetViewModel()
         {
-            NewCabinet = new CabinetViewModel();
+            NewCabinet = new Cabinet();
             Create = new RelayCommand(obj =>
             {
                 CabinetCreated?.Invoke(NewCabinet);
