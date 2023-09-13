@@ -11,12 +11,14 @@ namespace FlowRecorder.MVVM.Db
     {            
         public AppDbContext()
         {
+            AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
             Database.EnsureCreated();
         }
 
         public DbSet<MeterNode> MeterNode { get; set; }
+        public DbSet<DataForHLS> DataForHLS { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-            => optionsBuilder.UseNpgsql("Host=localhost;Database=Flowrecorder;Username=postgres;Password=79579022");        
+            => optionsBuilder.UseNpgsql("Host=localhost;Database=Flowrecorder1;Username=postgres;Password=79579022");        
     }
 }

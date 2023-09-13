@@ -126,32 +126,24 @@ namespace FlowRecorder.MVVM.ViewModel
         public RelayCommand BtnSave { get; set; }
         void btnSaveClick()
         {
-            BinaryFormatter binFormat = new BinaryFormatter();
-            // Сохранить объект в локальном файле.
-            using (Stream fStream = new FileStream("user.dat",
-               FileMode.Create, FileAccess.Write, FileShare.None))
-            {
-                binFormat.Serialize(fStream, serializedCabinets);
-            }
+            //BinaryFormatter binFormat = new BinaryFormatter();
+            //// Сохранить объект в локальном файле.
+            //using (Stream fStream = new FileStream("user.dat",
+            //   FileMode.Create, FileAccess.Write, FileShare.None))
+            //{
+            //    binFormat.Serialize(fStream, serializedCabinets);
+            //}
 
-            using (AppDbContext db = new AppDbContext())
+            using (AppDbContext db = new())
             {
-                MeterNode node = new MeterNode()
+                db.DataForHLS.Add(new DataForHLS()
                 {
-                    NodeName = "Новое тестовое имя",
-                    NodeCode = 1,
-                    FlowMeterAddrIP = "192.168.10.1",
-                    DensityMeterAddrIP = "192.168.10.2",
-                    FlowMeterAddrModbus = 1,
-                    FlowUpdateTimeInterval = 5000,
-                    DensityUpdateTimeInterval = 6000,
-                    TimeIntervalRecording = 12000,
-                    FlowDeltaRecording = 500
-                };
+                    DTRecording = DateTime.Now,
+                    vFlow = 123,
+                });
 
-                db.MeterNode.Add(node);
                 db.SaveChanges();
-            }           
+            }
         }
         public RelayCommand BtnStart { get; set; }
         void btnStartClick() 

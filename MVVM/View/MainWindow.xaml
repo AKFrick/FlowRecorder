@@ -62,7 +62,6 @@
                                 />
                         </Button>
 
-
                         <StackPanel Grid.Row="3" Orientation="Vertical">
                             <!--Кнопка сохранить-->
                             <Button Height="80" Background="Transparent"

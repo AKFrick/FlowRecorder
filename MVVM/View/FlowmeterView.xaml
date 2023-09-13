@@ -8,15 +8,16 @@
              d:DesignHeight="120" d:DesignWidth="500"
              Height="120" Width="500"
              >
-    <Grid Background="#2B5278">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition/>
-        </Grid.RowDefinitions>
-                        
-        <TextBlock             
+    <Border BorderBrush="{Binding StatusColor}" BorderThickness="4">
+        <Grid Background="#2B5278">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <TextBlock             
             Text="{Binding Description}" 
             
             Foreground="White" 
@@ -25,44 +26,44 @@
             Margin="10,5,5,5"
             />
 
-        <StackPanel
+            <StackPanel
             Orientation="Horizontal"
             HorizontalAlignment="Center" VerticalAlignment="Center">
-            
-            <TextBlock 
+
+                <TextBlock 
                 Text="{Binding AccumulatedValue}" 
                 VerticalAlignment="Center"
                 Foreground="White"             
                 FontSize="65"
             />
 
-            <Label
+                <Label
                 Foreground="White"             
                 FontSize="65"
                 Content="м3"
             />
-        </StackPanel>
+            </StackPanel>
 
-        <StackPanel
+            <StackPanel
             Orientation="Horizontal"
             HorizontalAlignment="Right" VerticalAlignment="Bottom"
             Margin="5,5,10,5"
             >
-            <TextBlock 
+                <TextBlock 
                 Text="{Binding InstantValue}" 
                 Foreground="White" 
                 VerticalAlignment="Center"
                 FontSize="20"           
             />
-            <Label
+                <Label
                 Foreground="White"      
                 VerticalAlignment="Center"
                 FontSize="20"
                 Content="м3/ч"
             />
-        </StackPanel>
+            </StackPanel>
 
-        <Button
+            <Button
             Width="70"
             Height="20"
             HorizontalAlignment="Right"
@@ -73,10 +74,11 @@
             HorizontalContentAlignment="Right"
             Command="{Binding DestroyFlowmeter}"
             >
-            <TextBlock
+                <TextBlock
                 Foreground="#768C9E"                  
                 Text="Удалить"
                 />
-        </Button>
-    </Grid>
+            </Button>
+        </Grid>
+    </Border>
 </UserControl>

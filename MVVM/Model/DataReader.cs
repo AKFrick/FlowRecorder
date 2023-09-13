@@ -22,16 +22,20 @@ namespace FlowRecorder.MVVM.Model
         CancellationTokenSource tokenSource2;
         CancellationToken ct;
 
-        public DataReader()
+        public DataReader(string Name)
         {
             factory = new();
+            this.Name = Name;
         }
 
+        public string Name { get; private set; }
         byte slaveID = 16;
         ushort startAddress = 0;
         ushort numOfPoints = 6;
 
         public event Action<Double> ValueRead;
+        public event Action Connected;
+        public event Action Disconnected;
 
         public async void StartReading()
         {
@@ -40,7 +44,7 @@ namespace FlowRecorder.MVVM.Model
 
             readingTask = Task.Run(() =>
             {
-                OutputLog.That("Подключение к MOXA ");
+                OutputLog.That($"{Name}: Подключение к MOXA ");
 
                 using TcpClient tcpClient = new();
                 tcpClient.Connect("192.168.10.254", 4001);
@@ -48,7 +52,9 @@ namespace FlowRecorder.MVVM.Model
                 using TcpClientAdapter adapter = new(tcpClient) { ReadTimeout = 3000 };
 
                 using ModbusSerialMaster master = (ModbusSerialMaster)factory.CreateRtuMaster(adapter);
-                OutputLog.That("Подключение установлено. Начинаем читать");
+                OutputLog.That($"{Name}: Подключение установлено. Начинаем читать");
+
+                Connected?.Invoke();
 
                 while (true)
                 {
@@ -72,26 +78,27 @@ namespace FlowRecorder.MVVM.Model
             }
             catch (SocketException ex)
             {
-                OutputLog.That($"Ошибка соединения {ex.Message}");
+                OutputLog.That($"{Name}: Ошибка соединения {ex.Message}");
 
                 RetryConnect();
             }
             catch (IOException ex)
             {
-                OutputLog.That($"Соединение разорвано {ex.Message}");
+                OutputLog.That($"{Name}: Соединение разорвано {ex.Message}");
 
                 RetryConnect();
             }
             catch (OperationCanceledException ex)
             {
-                OutputLog.That($"Чтение прервано пользователем!");
+                OutputLog.That($"{Name}: Чтение прервано пользователем!");
             }
             catch (Exception ex)
             {
-                OutputLog.That($"{ex.Message} : {ex.GetType()}");
+                OutputLog.That($"{Name}: {ex.Message} : {ex.GetType()}");
             }
             finally
             {
+                Disconnected?.Invoke();
                 tokenSource2.Dispose();
             }
         }
