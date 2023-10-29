@@ -10,6 +10,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Collections.Specialized;
 
 namespace FlowRecorder.MVVM.View
 {
@@ -21,6 +22,11 @@ namespace FlowRecorder.MVVM.View
         public Output()
         {
             InitializeComponent();
+            ((INotifyCollectionChanged)Log.Items).CollectionChanged += (s, e) =>
+            {
+                if (Log.Items.Count > 0)
+                    Log.ScrollIntoView(Log.Items[Log.Items.Count - 1]);
+            };
         }
     }
 }

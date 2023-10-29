@@ -13,7 +13,7 @@
             <Setter Property="TextBlock.TextWrapping" Value="Wrap"></Setter>
         </Style>
     </UserControl.Resources>
-    
+
     <Grid>
         <DataGrid Name="Log" 
                   Width="Auto"
@@ -40,7 +40,7 @@
                   ItemsSource="{Binding OutputItems}"
                   IsSynchronizedWithCurrentItem="False"
                   HeadersVisibility="None"
-                  Background="Transparent"
+                  Background="Transparent"                  
                   >
 
             <DataGrid.ColumnHeaderStyle>

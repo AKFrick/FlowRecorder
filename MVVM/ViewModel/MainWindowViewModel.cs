@@ -40,57 +40,6 @@ namespace FlowRecorder.MVVM.ViewModel
             };
             #endregion
 
-            #region сериализация
-            //Cabinets.CollectionChanged += (s, a) =>
-            //{
-            //    if (a.NewItems?.Count >= 1)
-            //    {
-            //        foreach (CabinetViewModel cabinet in a.NewItems)
-            //            serializedCabinets.Add(new SerializableCabinet(cabinet));
-            //    }
-            //    if (a.OldItems?.Count >= 1)
-            //    {
-            //        foreach (CabinetViewModel cabinet in a.OldItems)
-            //            serializedCabinets.RemoveAll(obj => obj.Description == cabinet.Description);
-            //    }
-            //};
-
-            //using (StreamReader streamReader = new StreamReader("user.dat"))
-            //{
-            //    BinaryFormatter binaryFormatter = new BinaryFormatter();
-            //    object obj;
-            //    try
-            //    {
-            //        obj = binaryFormatter.Deserialize(streamReader.BaseStream);
-            //        var cabs = (List<SerializableCabinet>)obj;
-            //        foreach (var bincabinet in cabs)
-            //        {
-            //            Cabinet cab = new Cabinet()
-            //            {
-            //                Description = bincabinet.Description
-            //            };
-            //            addCabinet(cab);
-            //            OutputLog.That($"Расходомеров: {bincabinet.Flowmeters.Count}");
-
-            //            editCabinet = cab;
-            //            foreach (var binflowmeter in bincabinet.Flowmeters)
-            //            {
-            //                OutputLog.That("Расходомер!!");
-            //                Flowmeter flow = new Flowmeter()
-            //                {
-            //                    Description = binflowmeter.Description
-            //                };
-            //                addFlowmeter(flow);
-
-            //            }
-            //        }
-            //    }
-            //    catch (SerializationException ex)
-            //    {
-            //        OutputLog.That(ex.ToString());
-            //    }
-            //}
-            #endregion
 
             cabinetsModel = new();
 
@@ -112,6 +61,55 @@ namespace FlowRecorder.MVVM.ViewModel
             };
             #endregion
 
+            #region сериализация
+            //Cabinets.CollectionChanged += (s, a) =>
+            //{
+            //    if (a.NewItems?.Count >= 1)
+            //    {
+            //        foreach (CabinetViewModel cabinet in a.NewItems)
+            //            serializedCabinets.Add(new SerializableCabinet(cabinet));
+            //    }
+            //    if (a.OldItems?.Count >= 1)
+            //    {
+            //        foreach (CabinetViewModel cabinet in a.OldItems)
+            //            serializedCabinets.RemoveAll(obj => obj.Description == cabinet.Description);
+            //    }
+            //};
+            using (StreamReader streamReader = new StreamReader("user.dat"))
+            {
+                BinaryFormatter binaryFormatter = new BinaryFormatter();
+                object obj;
+                try
+                {
+                    obj = binaryFormatter.Deserialize(streamReader.BaseStream);
+                    var cabs = (ObservableCollection<Cabinet>)obj;
+                    foreach (var bincabinet in cabs)
+                    {
+                        Cabinet cab = new Cabinet()
+                        {
+                            Description = bincabinet.Description
+                        };
+                        foreach (var binflowmeter in bincabinet.Flowmeters)
+                        {
+                            Flowmeter flow = new Flowmeter()
+                            {
+                                Description = binflowmeter.Description
+                            };
+                            cab.AddNewFlowmeter(flow);
+                        }
+                        addCabinet(cab);
+
+                        OutputLog.That($"Расходомеров: {bincabinet.Flowmeters.Count}");
+
+                    }
+                }
+                catch (SerializationException ex)
+                {
+                    OutputLog.That(ex.ToString());
+                }
+            }
+            #endregion
+
             #region Command            
             BtnSave = new(obj => btnSaveClick());
             BtnStart = new(obj => btnStartClick());
@@ -122,34 +120,35 @@ namespace FlowRecorder.MVVM.ViewModel
         public ObservableCollection<LogItem> OutputItems { get; set; }
         public ObservableCollection<CabinetViewModel> Cabinets { get; set; } = new ObservableCollection<CabinetViewModel>();
         ObservableCollection<Cabinet> cabinetsModel;
-        private List<SerializableCabinet> serializedCabinets { get; set; } = new List<SerializableCabinet>();
+        //private List<SerializableCabinet> serializedCabinets { get; set; } = new List<SerializableCabinet>();
         public RelayCommand BtnSave { get; set; }
         void btnSaveClick()
         {
-            //BinaryFormatter binFormat = new BinaryFormatter();
-            //// Сохранить объект в локальном файле.
-            //using (Stream fStream = new FileStream("user.dat",
-            //   FileMode.Create, FileAccess.Write, FileShare.None))
-            //{
-            //    binFormat.Serialize(fStream, serializedCabinets);
-            //}
-
-            using (AppDbContext db = new())
+            BinaryFormatter binFormat = new BinaryFormatter();
+            // Сохранить объект в локальном файле.
+            using (Stream fStream = new FileStream("user.dat",
+               FileMode.Create, FileAccess.Write, FileShare.None))
             {
-                db.DataForHLS.Add(new DataForHLS()
-                {
-                    DTRecording = DateTime.Now,
-                    vFlow = 123,
-                });
-
-                db.SaveChanges();
+                binFormat.Serialize(fStream, cabinetsModel);
             }
+
+            //using (AppDbContext db = new())
+            //{
+            //    db.DataForHLS.Add(new DataForHLS()
+            //    {
+            //        DTRecording = DateTime.Now,
+            //        vFlow = 123,
+            //    });
+
+            //    db.SaveChanges();
+            //}
         }
         public RelayCommand BtnStart { get; set; }
+
         void btnStartClick() 
         {
-            foreach (var cab in cabinetsModel)
-                 cab.Start();
+            //foreach (var cab in cabinetsModel)
+            //     cab.Start();
         }
         public RelayCommand BtnStop { get; set; }
         void btnStopClick()         
@@ -168,6 +167,7 @@ namespace FlowRecorder.MVVM.ViewModel
         {            
             //cabinet.DestroyCabinetClicked += DestroyCabinetClick;
             cabinetsModel.Add(cabinet);
+            
             OutputLog.That($"Добавлен новый ящик: {cabinet.Description}");
         }        
         private void DestroyCabinetClick(CabinetViewModel cabinet)

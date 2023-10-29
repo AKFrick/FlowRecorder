@@ -9,13 +9,16 @@ using System.Threading.Tasks;
 using System.Collections.Specialized;
 using System.Windows;
 
+
 namespace FlowRecorder.MVVM.ViewModel
 {
-    public class CabinetViewModel
+    public class CabinetViewModel 
     {
         public CabinetViewModel(Cabinet cabinet)
-        {            
+        {     
             Flowmeters = new ObservableCollection<FlowmeterViewModel>();
+            foreach (var flowmeter in cabinet.Flowmeters)
+                Flowmeters.Add(new FlowmeterViewModel(flowmeter));
 
             Description = cabinet.Description;
 
@@ -70,5 +73,7 @@ namespace FlowRecorder.MVVM.ViewModel
         }
         public Action<CabinetViewModel> DestroyCabinetClicked;
         public RelayCommand DestroyCabinet { get; set; }
+
+
     }
 }

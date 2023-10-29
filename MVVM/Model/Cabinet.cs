@@ -6,6 +6,7 @@ using FlowRecorder.MVVM.View;
 
 namespace FlowRecorder.MVVM.Model
 {
+    [Serializable]
     public class Cabinet
     {
         public Cabinet()
@@ -26,6 +27,7 @@ namespace FlowRecorder.MVVM.Model
             foreach (Flowmeter flowmeter in Flowmeters)
                 flowmeter.Start();
         }
+
         public string Description { get; set; }        
         public ObservableCollection<Flowmeter> Flowmeters { get; set; }        
        

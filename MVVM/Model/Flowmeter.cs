@@ -7,6 +7,7 @@ using FlowRecorder.MVVM.Db;
 
 namespace FlowRecorder.MVVM.Model
 {
+    [Serializable]
     public class Flowmeter
     {
         public Flowmeter()
@@ -70,10 +71,13 @@ namespace FlowRecorder.MVVM.Model
             } 
         }
         double instantValue;
+        [field:NonSerialized]
         public event Action<double> InstantValueUpdated;
+        [field: NonSerialized]
         public event Action Connected;
+        [field: NonSerialized]
         public event Action Disconnected;
-
+        [field: NonSerialized]
         DataReader reader;
     }
 }
