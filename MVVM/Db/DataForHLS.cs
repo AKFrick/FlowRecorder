@@ -17,4 +17,13 @@ namespace FlowRecorder.MVVM.Db
         public double vDensity { get; set; }
 
     }
+
+    public static class DataForHLSExtension
+    {
+        public static string ToLog(this DataForHLS data)
+        {
+            return data.vFlow.ToString();
+        }
+    }
+
 }

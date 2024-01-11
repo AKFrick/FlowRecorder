@@ -11,7 +11,6 @@ namespace FlowRecorder.MVVM.Db
     {
         [Key]
         public int Id { get; set; }
-
         [Required]
         public string NodeName { get; set; }
         [Required]
@@ -22,7 +21,7 @@ namespace FlowRecorder.MVVM.Db
         public int FlowUpdateTimeInterval { get; set; }
         public int DensityUpdateTimeInterval { get; set; }
         public int TimeIntervalRecording { get; set; }
-        public double FlowDeltaRecording { get; set; }
-
+        public double FlowDeltaRecording { get; set; }        
+        public string CabinetName { get; set; }
     }
 }

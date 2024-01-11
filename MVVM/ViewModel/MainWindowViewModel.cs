@@ -124,24 +124,14 @@ namespace FlowRecorder.MVVM.ViewModel
         public RelayCommand BtnSave { get; set; }
         void btnSaveClick()
         {
-            BinaryFormatter binFormat = new BinaryFormatter();
-            // Сохранить объект в локальном файле.
-            using (Stream fStream = new FileStream("user.dat",
-               FileMode.Create, FileAccess.Write, FileShare.None))
-            {
-                binFormat.Serialize(fStream, cabinetsModel);
-            }
-
-            //using (AppDbContext db = new())
+            //BinaryFormatter binFormat = new BinaryFormatter();
+            //// Сохранить объект в локальном файле.
+            //using (Stream fStream = new FileStream("user.dat",
+            //   FileMode.Create, FileAccess.Write, FileShare.None))
             //{
-            //    db.DataForHLS.Add(new DataForHLS()
-            //    {
-            //        DTRecording = DateTime.Now,
-            //        vFlow = 123,
-            //    });
-
-            //    db.SaveChanges();
+            //    binFormat.Serialize(fStream, cabinetsModel);
             //}
+            DatabaseControl.SaveMeterNodes(cabinetsModel);
         }
         public RelayCommand BtnStart { get; set; }
 
