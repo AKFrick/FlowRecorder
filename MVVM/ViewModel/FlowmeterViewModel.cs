@@ -22,7 +22,13 @@ namespace FlowRecorder.MVVM.ViewModel
             flowmeterModel.Connected += () => ChangeColorToConnected();
             flowmeterModel.Disconnected += () => ChangeColorToDisconnected();
 
-            DestroyFlowmeter = new RelayCommand(obj => DestroyFlowmeterClicked?.Invoke(this));
+            ChangeFlowmeter = new RelayCommand(obj =>
+            {
+                ChangeFlowmeterClicked?.Invoke(flowmeterModel);
+                OutputLog.That("Click");
+            }
+            
+            );
         }
 
         public Flowmeter flowmeterModel { get; private set; }
@@ -38,14 +44,17 @@ namespace FlowRecorder.MVVM.ViewModel
             StatusColor = Brushes.Red;
         }
 
-        public Action<FlowmeterViewModel> DestroyFlowmeterClicked;
+        public Action<Flowmeter> ChangeFlowmeterClicked;
         public string Description { get; set; }                
 
         public double AccumulatedValue { get; set; } = 0.0;
         public string InstantValue { get { return instantValue; } set { instantValue = value; OnPropertyChanged(nameof(InstantValue)); } }
         string instantValue;
 
-        public RelayCommand DestroyFlowmeter { get; set; }
+        public string Ip { get { return flowmeterModel.Ip; } }
+        public int Port { get { return flowmeterModel.Port; } }
+
+        public RelayCommand ChangeFlowmeter { get; set; }
 
         public event PropertyChangedEventHandler? PropertyChanged;
         public void OnPropertyChanged(string propertyName)

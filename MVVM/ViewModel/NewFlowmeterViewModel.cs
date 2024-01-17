@@ -25,6 +25,16 @@ namespace FlowRecorder.MVVM.ViewModel
 
             });
         }
+        public NewFlowmeterViewModel(Flowmeter flowmeter)
+        {
+            NewFlowmeter = flowmeter;
+            Create = new RelayCommand(obj =>
+            {
+                FlowmeterCreated?.Invoke(NewFlowmeter);
+
+            });
+
+        }
         public RelayCommand Create { get; set; }
     }
 }

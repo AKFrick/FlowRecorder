@@ -22,18 +22,22 @@ namespace FlowRecorder.MVVM.Model
         CancellationTokenSource tokenSource2;
         CancellationToken ct;
 
-        public DataReader(string Name)
+        public DataReader(string Name, string Ip, int Port)
         {
             factory = new();
             this.Name = Name;
+            this.Ip = Ip;
+            this.Port = Port;
         }
 
         public string Name { get; private set; }
-        byte slaveID = 16;
+        byte slaveID = 1;
         ushort startAddress = 0;
-        ushort numOfPoints = 6;
+        ushort numOfPoints = 30;
+        string Ip;
+        int Port;
 
-        public event Action<Double> ValueRead;
+        public event Action<Double> ValueRead; //Сделать массивом, для того, чтобы считывать и расходомер и плотномер
         public event Action Connected;
         public event Action Disconnected;
 
@@ -47,7 +51,7 @@ namespace FlowRecorder.MVVM.Model
                 OutputLog.That($"{Name}: Подключение к MOXA ");
 
                 using TcpClient tcpClient = new();
-                tcpClient.Connect("192.168.10.254", 4001);
+                tcpClient.Connect(Ip, Port);
 
                 using TcpClientAdapter adapter = new(tcpClient) { ReadTimeout = 3000 };
 
@@ -58,9 +62,11 @@ namespace FlowRecorder.MVVM.Model
 
                 while (true)
                 {
-                    ushort[] holding_register = master.ReadHoldingRegisters(slaveID, startAddress, numOfPoints);
+                    ushort[] holding_register = master.ReadInputRegisters(slaveID, startAddress, numOfPoints);
 
-                    ValueRead?.Invoke(ModbusUtility.GetSingle(holding_register[4], holding_register[5]));
+                    //ValueRead?.Invoke(ModbusUtility.GetSingle(holding_register[4], holding_register[5]));
+
+                    ValueRead?.Invoke(holding_register[23]);
 
                     if (ct.IsCancellationRequested)
                     {

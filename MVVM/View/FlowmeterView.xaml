@@ -72,13 +72,36 @@
             BorderThickness="0"  
             Margin="5,5,10,5"
             HorizontalContentAlignment="Right"
-            Command="{Binding DestroyFlowmeter}"
+            Command="{Binding ChangeFlowmeter}"
             >
                 <TextBlock
                 Foreground="#768C9E"                  
-                Text="Удалить"
+                Text="Изменить"
                 />
             </Button>
+
+            <StackPanel
+            Orientation="Horizontal"
+            HorizontalAlignment="Left" VerticalAlignment="Bottom"
+            Margin="5,5,10,5"
+            >
+                <TextBlock 
+                Text="{Binding Ip}" 
+                Foreground="#768C9E" 
+                VerticalAlignment="Center"                           
+                />
+                <Label
+                Foreground="#768C9E"      
+                VerticalAlignment="Center"                
+                Content=":"
+                />
+                <TextBlock 
+                Text="{Binding Port}" 
+                Foreground ="#768C9E"
+                VerticalAlignment="Center"                
+                />
+            </StackPanel>
+
         </Grid>
     </Border>
 </UserControl>

@@ -22,6 +22,14 @@ namespace FlowRecorder.MVVM.Model
         {
             Flowmeters.Add(flowmeter);
         }
+        public void AddNewDensityMeter(Densitymeter densitymeter)
+        {
+            Densitymeters.Add(densitymeter);
+
+            foreach (var meter in Flowmeters)
+                meter.Densitymeter = densitymeter;
+        }
+
         public void Start()
         {
             foreach (Flowmeter flowmeter in Flowmeters)
@@ -29,7 +37,8 @@ namespace FlowRecorder.MVVM.Model
         }
 
         public string Description { get; set; }        
-        public ObservableCollection<Flowmeter> Flowmeters { get; set; }        
-       
+        public ObservableCollection<Flowmeter> Flowmeters { get; set; }
+        public ObservableCollection<Densitymeter> Densitymeters { get; set; }
+
     }
 }

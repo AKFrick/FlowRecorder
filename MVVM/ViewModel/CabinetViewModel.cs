@@ -18,7 +18,12 @@ namespace FlowRecorder.MVVM.ViewModel
         {     
             Flowmeters = new ObservableCollection<FlowmeterViewModel>();
             foreach (var flowmeter in cabinet.Flowmeters)
-                Flowmeters.Add(new FlowmeterViewModel(flowmeter));
+            {
+                var newFl = new FlowmeterViewModel(flowmeter);
+                newFl.ChangeFlowmeterClicked += OpenChangeFlowmeterWindow;
+                Flowmeters.Add(newFl);
+
+            }    
 
             Description = cabinet.Description;
 
@@ -30,7 +35,12 @@ namespace FlowRecorder.MVVM.ViewModel
                     Application.Current.Dispatcher.BeginInvoke(new Action(() =>
                     {
                         foreach (Flowmeter item in a.NewItems)
-                            Flowmeters.Add(new FlowmeterViewModel(item));
+                        {
+                            var newFl = new FlowmeterViewModel(item);
+                            newFl.ChangeFlowmeterClicked += OpenChangeFlowmeterWindow;
+                            Flowmeters.Add(newFl);
+
+                        }
                     }));
                 if (a.OldItems?.Count >= 1)
                     Application.Current.Dispatcher.BeginInvoke(new Action(() =>
@@ -44,13 +54,13 @@ namespace FlowRecorder.MVVM.ViewModel
             DestroyCabinet = new RelayCommand(obj => DestroyCabinetClicked?.Invoke(this));
 
             AddFlowmeterCommand = new RelayCommand(obj => OpenNewFlowmeterWindow());
-
         }
         public Cabinet cabinetModel { get; private set; }
         
         public string Description { get; set; }
         public virtual ObservableCollection<FlowmeterViewModel> Flowmeters { get; set; }        
-
+       
+        //СОЗДАНИЕ НОВОГО РАСХОДОМЕРА
         public RelayCommand AddFlowmeterCommand { get; set; }
         void OpenNewFlowmeterWindow()
         {
@@ -67,6 +77,18 @@ namespace FlowRecorder.MVVM.ViewModel
 
             cabinetModel.AddNewFlowmeter(flowmeter);
         }
+
+        //ИЗМЕНЕНИЕ РАСХОДОМЕРА   
+        void OpenChangeFlowmeterWindow(Flowmeter flowmeter)
+        {
+            OutputLog.That("Subscr");
+            NewFlowmeterViewModel model = new NewFlowmeterViewModel(flowmeter);
+            //model.FlowmeterCreated += AddNewFlowmeter;
+
+            NewFlowmeterWindow newFlowmeter = new NewFlowmeterWindow(model);
+            newFlowmeter.ShowDialog();
+        }
+
         void DestroyFlowmeter(FlowmeterViewModel flowmeter)
         {
             Flowmeters.Remove(flowmeter);
