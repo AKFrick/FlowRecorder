@@ -20,7 +20,7 @@ namespace FlowRecorder.MVVM.ViewModel
             foreach (var flowmeter in cabinet.Flowmeters)
             {
                 var newFl = new FlowmeterViewModel(flowmeter);
-                newFl.ChangeFlowmeterClicked += OpenChangeFlowmeterWindow;
+                newFl.ChangeFlowmeterClicked += OpenChangeMeterWindow;
                 Flowmeters.Add(newFl);
 
             }    
@@ -29,6 +29,7 @@ namespace FlowRecorder.MVVM.ViewModel
 
             cabinetModel = cabinet;
 
+            //Подписка на расходомеры для отображения
             ((INotifyCollectionChanged)cabinet.Flowmeters).CollectionChanged += (s, a) =>
             {
                 if (a.NewItems?.Count >= 1)
@@ -37,7 +38,7 @@ namespace FlowRecorder.MVVM.ViewModel
                         foreach (Flowmeter item in a.NewItems)
                         {
                             var newFl = new FlowmeterViewModel(item);
-                            newFl.ChangeFlowmeterClicked += OpenChangeFlowmeterWindow;
+                            newFl.ChangeFlowmeterClicked += OpenChangeMeterWindow;
                             Flowmeters.Add(newFl);
 
                         }
@@ -49,52 +50,81 @@ namespace FlowRecorder.MVVM.ViewModel
                         //    OutputItems.Remove(item);
                     }));
             };
+            //Подписка на плотномеры для отображения
+            ((INotifyCollectionChanged)cabinet.Densitymeters).CollectionChanged += (s, a) =>
+            {
+                if (a.NewItems?.Count >= 1)
+                    Application.Current.Dispatcher.BeginInvoke(new Action(() =>
+                    {
+                        foreach (Densitymeter item in a.NewItems)
+                        {
+                            var newFl = new DensitymeterViewModel(item);
+                            newFl.ChangeMeterClicked += OpenChangeMeterWindow;
+                            Densitymeters.Add(newFl);
 
-
-            DestroyCabinet = new RelayCommand(obj => DestroyCabinetClicked?.Invoke(this));
+                        }
+                    }));
+                if (a.OldItems?.Count >= 1)
+                    Application.Current.Dispatcher.BeginInvoke(new Action(() =>
+                    {
+                        //foreach (LogItem item in a.OldItems)
+                        //    OutputItems.Remove(item);
+                    }));
+            };
+           
 
             AddFlowmeterCommand = new RelayCommand(obj => OpenNewFlowmeterWindow());
+            AddDensitymeterCommand = new RelayCommand(obj => OpenNewDensitymeterWindow());
         }
         public Cabinet cabinetModel { get; private set; }
         
         public string Description { get; set; }
-        public virtual ObservableCollection<FlowmeterViewModel> Flowmeters { get; set; }        
-       
+        public virtual ObservableCollection<FlowmeterViewModel> Flowmeters { get; set; }
+        public virtual ObservableCollection<DensitymeterViewModel> Densitymeters { get; set; }
+
         //СОЗДАНИЕ НОВОГО РАСХОДОМЕРА
         public RelayCommand AddFlowmeterCommand { get; set; }
+        public RelayCommand AddDensitymeterCommand { get; set; }
         void OpenNewFlowmeterWindow()
         {
-            NewFlowmeterViewModel model = new NewFlowmeterViewModel();
-            model.FlowmeterCreated += AddNewFlowmeter;
+            NewMeterViewModel model = new NewMeterViewModel(new Meter());
+            model.MeterCreated += AddNewFlowmeter;
 
-            NewFlowmeterWindow newFlowmeter = new NewFlowmeterWindow(model);
+            NewMeterWindow newFlowmeter = new NewMeterWindow(model);
             newFlowmeter.ShowDialog();
         }
-        public void AddNewFlowmeter(Flowmeter flowmeter)
+        void OpenNewDensitymeterWindow()
+        {
+            NewMeterViewModel model = new NewMeterViewModel(new Meter());
+            model.MeterCreated += AddNewDensitymeter;
+
+            NewMeterWindow newFlowmeter = new NewMeterWindow(model);
+            newFlowmeter.ShowDialog();
+        }
+        public void AddNewFlowmeter(Meter meter)
         {
             //flowmeter.DestroyFlowmeterClicked += DestroyFlowmeter;
             //Flowmeters.Add(flowmeter);
 
-            cabinetModel.AddNewFlowmeter(flowmeter);
+            cabinetModel.AddNewFlowmeter(new Flowmeter(meter));
+        }
+        public void AddNewDensitymeter(Meter meter)
+        {
+            cabinetModel.AddNewDensityMeter(new Densitymeter(meter));
         }
 
         //ИЗМЕНЕНИЕ РАСХОДОМЕРА   
-        void OpenChangeFlowmeterWindow(Flowmeter flowmeter)
+        void OpenChangeMeterWindow(Meter meter)
         {
             OutputLog.That("Subscr");
-            NewFlowmeterViewModel model = new NewFlowmeterViewModel(flowmeter);
+            NewMeterViewModel model = new NewMeterViewModel(meter);
             //model.FlowmeterCreated += AddNewFlowmeter;
 
-            NewFlowmeterWindow newFlowmeter = new NewFlowmeterWindow(model);
+            NewMeterWindow newFlowmeter = new NewMeterWindow(model);
             newFlowmeter.ShowDialog();
         }
 
-        void DestroyFlowmeter(FlowmeterViewModel flowmeter)
-        {
-            Flowmeters.Remove(flowmeter);
-        }
-        public Action<CabinetViewModel> DestroyCabinetClicked;
-        public RelayCommand DestroyCabinet { get; set; }
+
 
 
     }

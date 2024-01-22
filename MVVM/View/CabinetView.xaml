@@ -39,20 +39,6 @@
             Margin="5"
             FontSize="24"
             />
-        <Button
-            Grid.Row="1" Grid.Column="1"
-            Width="100"
-            HorizontalAlignment="Right"
-            Background="Transparent"
-            BorderThickness="0"              
-            Command="{Binding DestroyCabinet}"
-            >
-            <TextBlock
-                Foreground="#768C9E"                                                               
-                Text="Удалить ящик"
-                />
-        </Button>
-
         <!--Flowmeters-->
         <StackPanel Grid.Row="2" Grid.Column="0">
             <ItemsControl 
@@ -98,13 +84,19 @@
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
-            <TextBlock
+            <Button
+                Background="Transparent"
+                BorderThickness="0"  
+                Command="{Binding AddDensitymeterCommand}"
+                >
+                <TextBlock
                 Foreground="#768C9E"
                 Width="500" Height="auto"
                 TextAlignment ="Center"
                 FontSize="20"
                 Text="Добавьте плотномер"
                 />
+            </Button>
         </StackPanel>
     </Grid>
 </UserControl>

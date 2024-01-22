@@ -16,12 +16,12 @@ namespace FlowRecorder.MVVM.View
     /// <summary>
     /// Interaction logic for NewFlowmeterWindow.xaml
     /// </summary>
-    public partial class NewFlowmeterWindow : Window
+    public partial class NewMeterWindow : Window
     {
-        public NewFlowmeterWindow(NewFlowmeterViewModel viewModel)
+        public NewMeterWindow(NewMeterViewModel viewModel)
         {
             InitializeComponent();
-            viewModel.FlowmeterCreated += (flowmeter) => Close();
+            viewModel.MeterCreated += (meter) => Close();
             DataContext = viewModel;
         }
     }

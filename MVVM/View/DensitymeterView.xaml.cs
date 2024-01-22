@@ -16,9 +16,9 @@ namespace FlowRecorder.MVVM.View
     /// <summary>
     /// Interaction logic for Densitymeter.xaml
     /// </summary>
-    public partial class Densitymeter : UserControl
+    public partial class DensitymeterView : UserControl
     {
-        public Densitymeter()
+        public DensitymeterView()
         {
             InitializeComponent();
         }

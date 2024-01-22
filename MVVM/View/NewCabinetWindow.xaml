@@ -25,7 +25,7 @@
                FontSize="16"/>
 
         <Label Content="Обозначение" Grid.Column="0" Grid.Row="1" FontSize="15" Margin="5"/>
-        <TextBox Text="{Binding NewCabinet.Description}" Grid.Column="1" Grid.Row="1" FontSize="15"  Margin="5" MaxLength="15"/>
+        <TextBox Text="{Binding NewCabinet.Description}" Grid.Column="1" Grid.Row="1" FontSize="15"  Margin="5" MaxLength="35"/>
 
         <Button Command="{Binding Create}" Grid.Row="3" Grid.Column="1" Margin="5" Width="160" Height="40" Content="Создать" />
     </Grid>

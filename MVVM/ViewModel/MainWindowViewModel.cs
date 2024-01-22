@@ -135,7 +135,8 @@ namespace FlowRecorder.MVVM.ViewModel
         public RelayCommand BtnStop { get; set; }
         void btnStopClick()         
         {
-            
+            foreach (var cabinet in cabinetsModel)
+               cabinet.Stop();
         }
         public RelayCommand AddCabinet { get; set; }
         void addCabinetClick()

@@ -12,6 +12,7 @@ namespace FlowRecorder.MVVM.Model
         public Cabinet()
         {
             Flowmeters = new();
+            Densitymeters = new();
 
             //DestroyCabinet = new RelayCommand(obj => DestroyCabinetClicked?.Invoke(this));
 
@@ -34,6 +35,11 @@ namespace FlowRecorder.MVVM.Model
         {
             foreach (Flowmeter flowmeter in Flowmeters)
                 flowmeter.Start();
+        }
+        public void Stop()
+        {
+            foreach(Flowmeter flowmeter in Flowmeters)
+                flowmeter.Stop();
         }
 
         public string Description { get; set; }        

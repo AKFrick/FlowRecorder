@@ -14,6 +14,13 @@ namespace FlowRecorder.MVVM.Model
         {
 
         }
+        public Flowmeter(Meter meter)
+        {
+            this.Description = meter.Description;
+            this.Ip = meter.Ip;
+            this.Port = meter.Port;
+            this.DeviceAddress = meter.DeviceAddress;
+        }
         
         public Action<Flowmeter> DestroyFlowmeterClicked;
 
