@@ -19,7 +19,7 @@ namespace FlowRecorder.MVVM.Db
                 db.DataForHLS.Add(data);                
                 db.SaveChanges();
 
-                OutputLog.That(data.ToLog());                
+                OutputLog.That($"Записано значение: {data.ToLog()}");                
             }
         }
 

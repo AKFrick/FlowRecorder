@@ -22,22 +22,23 @@ namespace FlowRecorder.MVVM.Model
         CancellationTokenSource tokenSource2;
         CancellationToken ct;
 
-        public DataReader(string Name, string Ip, int Port)
+        public DataReader(string Name, string Ip, int Port, byte SlaveID, DataToRead Data)
         {
             factory = new();
             this.Name = Name;
             this.Ip = Ip;
             this.Port = Port;
+            this.slaveID = SlaveID;  
+            this.Data = Data;   
         }
 
         public string Name { get; private set; }
         byte slaveID = 1;
-        ushort startAddress = 0;
-        ushort numOfPoints = 30;
+        DataToRead Data { get; set; }
         string Ip;
         int Port;
 
-        public event Action<Double> ValueRead; //Сделать массивом, для того, чтобы считывать и расходомер и плотномер
+        public event Action<ushort[]> DataRead; //Сделать массивом, для того, чтобы считывать и расходомер и плотномер
         public event Action Connected;
         public event Action Disconnected;
 
@@ -62,11 +63,14 @@ namespace FlowRecorder.MVVM.Model
 
                 while (true)
                 {
-                    ushort[] holding_register = master.ReadInputRegisters(slaveID, startAddress, numOfPoints);
+                    ushort[] data = master.ReadInputRegisters(slaveID, Data.StartAddress, Data.NumOfPoint);
 
                     //ValueRead?.Invoke(ModbusUtility.GetSingle(holding_register[4], holding_register[5]));
 
-                    ValueRead?.Invoke(holding_register[23]);
+                    //ValueRead?.Invoke(holding_register[23]);
+                    //
+                    DataRead?.Invoke(data);
+
 
                     if (ct.IsCancellationRequested)
                     {

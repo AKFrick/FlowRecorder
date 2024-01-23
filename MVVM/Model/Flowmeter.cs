@@ -10,37 +10,28 @@ namespace FlowRecorder.MVVM.Model
     [Serializable]
     public class Flowmeter : Meter
     {
-        public Flowmeter()
-        {
-
-        }
         public Flowmeter(Meter meter)
         {
             this.Description = meter.Description;
             this.Ip = meter.Ip;
             this.Port = meter.Port;
             this.DeviceAddress = meter.DeviceAddress;
-        }
-        
-        public Action<Flowmeter> DestroyFlowmeterClicked;
 
-        public void Start()
-        {
-            reader = new(Description, Ip, Port);
-            reader.ValueRead += (value) => { InstantValue = value; };
-            reader.Connected += Connected;
-            reader.Disconnected += Disconnected;
-
-            reader.StartReading();
-        }
-        public void Stop()
-        {
-            reader.StopReading();  
-        }
+            dataToRead = new()
+            {
+                StartAddress = 0,
+                NumOfPoint = 33,
+                FunctionCode = DataToRead.FunctionCodes.ReadInput,
+            };
+        }   
 
         double prevSavedValue = 0;
         double diffToSave = 1;
-        
+
+        protected override void getValues(ushort[] data)
+        {
+            InstantValue = data[26];
+        }
         void checkValueToSave(double newFlowValue)
         {
             if ( Math.Abs(newFlowValue - prevSavedValue) > diffToSave)
@@ -50,19 +41,12 @@ namespace FlowRecorder.MVVM.Model
             }
         }
         void saveToDb(double flow)
-        {            
-            using (AppDbContext db = new())
+        {
+            DatabaseControl.SaveFlowData(new DataForHLS()
             {
-                db.DataForHLS.Add(new DataForHLS()
-                {
-                    DTRecording = DateTime.Now,
-                    vFlow = flow,
-                    NodeCode = Convert.ToInt16(Description)
-                });
-
-                db.SaveChanges();
-                OutputLog.That($"{Description} Записано новое значение {flow}");
-            }
+                vFlow = flow,
+                vDensity = Densitymeter.Density,
+            });
         }        
         public double AccumulatedValue { get; set; } = 0.0;
         public double InstantValue 
@@ -79,12 +63,6 @@ namespace FlowRecorder.MVVM.Model
         [field:NonSerialized]
         public event Action<double> InstantValueUpdated;
         [field: NonSerialized]
-        public event Action Connected;
-        [field: NonSerialized]
-        public event Action Disconnected;
-        [field: NonSerialized]
-        DataReader reader;
-
         public Densitymeter Densitymeter { get; set; }
     }
 }

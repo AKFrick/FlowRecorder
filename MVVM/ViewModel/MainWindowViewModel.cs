@@ -80,10 +80,14 @@ namespace FlowRecorder.MVVM.ViewModel
                             };
                             foreach (var binflowmeter in bincabinet.Flowmeters)
                             {
-                                Flowmeter flow = new Flowmeter()
+                                Flowmeter flow = new Flowmeter(new Meter()
                                 {
-                                    Description = binflowmeter.Description
-                                };
+                                    Description = binflowmeter.Description,
+                                    Ip = binflowmeter.Ip,
+                                    Port = binflowmeter.Port,
+                                    DeviceAddress = binflowmeter.DeviceAddress,
+                                });
+                                                                
                                 cab.AddNewFlowmeter(flow);
                             }
                             addCabinet(cab);

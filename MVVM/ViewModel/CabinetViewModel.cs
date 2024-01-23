@@ -87,7 +87,12 @@ namespace FlowRecorder.MVVM.ViewModel
         public RelayCommand AddDensitymeterCommand { get; set; }
         void OpenNewFlowmeterWindow()
         {
-            NewMeterViewModel model = new NewMeterViewModel(new Meter());
+            NewMeterViewModel model = new NewMeterViewModel(new Meter()
+            {
+                DeviceAddress = 1,
+                Ip = "10.57.137.214",
+                Port = 4001
+            });
             model.MeterCreated += AddNewFlowmeter;
 
             NewMeterWindow newFlowmeter = new NewMeterWindow(model);
