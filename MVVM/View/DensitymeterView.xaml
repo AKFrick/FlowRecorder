@@ -5,8 +5,114 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:FlowRecorder.MVVM.View"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
+             d:DesignHeight="120" d:DesignWidth="500"
+             Height="120" Width="500"
+             >
+    <Border BorderBrush="{Binding StatusColor}" BorderThickness="4">
+        <Grid Background="#2B5278">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <TextBlock             
+            Text="{Binding Description}" 
             
-    </Grid>
+            Foreground="White" 
+            HorizontalAlignment="Left" VerticalAlignment="Top"
+            FontSize="24"
+            Margin="10,5,5,5"
+            />
+
+            <!--DENSITY : TEMP-->
+            <StackPanel
+            Orientation="Horizontal"
+            HorizontalAlignment="Center" VerticalAlignment="Center">
+                <!--DENSITY-->
+                <StackPanel
+                    Margin="5"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Center" VerticalAlignment="Center">
+
+                    <TextBlock 
+                    Text="{Binding Temperature}" 
+                    VerticalAlignment="Center"
+                    Foreground="White"             
+                    FontSize="65"
+                    />
+
+                    <Label
+                    Foreground="White"             
+                    FontSize="65"
+                    Content="°C"
+                    />
+                </StackPanel>
+                
+                <!--TEMP-->
+                <StackPanel
+                    Margin="5"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Center" VerticalAlignment="Center">
+
+                    <TextBlock 
+                    Text="{Binding Temperature}" 
+                    VerticalAlignment="Center"
+                    Foreground="White"             
+                    FontSize="65"
+                    />
+
+                    <Label
+                    Foreground="White"             
+                    FontSize="65"
+                    Content="°C"
+                    />
+                    
+                </StackPanel>
+            </StackPanel>
+            
+            <!--EDIT-->
+            <Button
+            Width="70"
+            Height="20"
+            HorizontalAlignment="Right"
+            VerticalAlignment="Top"
+            Background="Transparent"
+            BorderThickness="0"  
+            Margin="5,5,10,5"
+            HorizontalContentAlignment="Right"
+            Command="{Binding Edit}"
+            >
+                <TextBlock
+                Foreground="#768C9E"                  
+                Text="Изменить"
+                />
+            </Button>
+            
+            <!--IP:PORT-->
+            <StackPanel 
+            Orientation="Horizontal"
+            HorizontalAlignment="Left" VerticalAlignment="Bottom"
+            Margin="5,5,10,5"
+            >
+                <TextBlock 
+                Text="{Binding Ip}" 
+                Foreground="#768C9E" 
+                VerticalAlignment="Center"                           
+                />
+                <Label
+                Foreground="#768C9E"      
+                VerticalAlignment="Center"                
+                Content=":"
+                />
+                <TextBlock 
+                Text="{Binding Port}" 
+                Foreground ="#768C9E"
+                VerticalAlignment="Center"                
+                />
+            </StackPanel>
+
+        </Grid>
+    </Border>
 </UserControl>

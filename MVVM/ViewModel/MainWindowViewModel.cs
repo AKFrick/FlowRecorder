@@ -43,7 +43,7 @@ namespace FlowRecorder.MVVM.ViewModel
 
             cabinetsModel = new();
 
-            #region ящики
+            #region ящики 
             ((INotifyCollectionChanged)cabinetsModel).CollectionChanged += (s, a) =>
             {
                 if (a.NewItems?.Count >= 1)
@@ -78,6 +78,19 @@ namespace FlowRecorder.MVVM.ViewModel
                             {
                                 Description = bincabinet.Description
                             };
+                            foreach (var binDensitymeter in bincabinet.Densitymeters)
+                            {
+                                Densitymeter dens = new Densitymeter(new Meter()
+                                {
+                                    Description = binDensitymeter.Description,
+                                    Ip = binDensitymeter.Ip,
+                                    Port = binDensitymeter.Port,
+                                    DeviceAddress = binDensitymeter.DeviceAddress,
+                                });
+
+                                cab.AddNewDensityMeter(dens);
+                            }
+
                             foreach (var binflowmeter in bincabinet.Flowmeters)
                             {
                                 Flowmeter flow = new Flowmeter(new Meter()
@@ -114,7 +127,6 @@ namespace FlowRecorder.MVVM.ViewModel
         public ObservableCollection<LogItem> OutputItems { get; set; }
         public ObservableCollection<CabinetViewModel> Cabinets { get; set; } = new ObservableCollection<CabinetViewModel>();
         ObservableCollection<Cabinet> cabinetsModel;
-        //private List<SerializableCabinet> serializedCabinets { get; set; } = new List<SerializableCabinet>();
         public RelayCommand BtnSave { get; set; }
         void btnSaveClick()
         {
@@ -152,7 +164,6 @@ namespace FlowRecorder.MVVM.ViewModel
         }        
         void addCabinet(Cabinet cabinet)
         {            
-            //cabinet.DestroyCabinetClicked += DestroyCabinetClick;
             cabinetsModel.Add(cabinet);
             
             OutputLog.That($"Добавлен новый ящик: {cabinet.Description}");

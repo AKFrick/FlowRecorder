@@ -17,6 +17,16 @@ namespace FlowRecorder.MVVM.ViewModel
         public CabinetViewModel(Cabinet cabinet)
         {     
             Flowmeters = new ObservableCollection<FlowmeterViewModel>();
+            Densitymeters = new ObservableCollection<DensitymeterViewModel>();
+
+
+            foreach(var densitymeter in cabinet.Densitymeters)
+            {
+                var newDen = new DensitymeterViewModel(densitymeter);
+                newDen.EditClicked += OpenChangeMeterWindow;
+                Densitymeters.Add(newDen);
+            }
+
             foreach (var flowmeter in cabinet.Flowmeters)
             {
                 var newFl = new FlowmeterViewModel(flowmeter);
@@ -24,6 +34,7 @@ namespace FlowRecorder.MVVM.ViewModel
                 Flowmeters.Add(newFl);
 
             }    
+            
 
             Description = cabinet.Description;
 
@@ -59,7 +70,7 @@ namespace FlowRecorder.MVVM.ViewModel
                         foreach (Densitymeter item in a.NewItems)
                         {
                             var newFl = new DensitymeterViewModel(item);
-                            newFl.ChangeMeterClicked += OpenChangeMeterWindow;
+                            newFl.EditClicked += OpenChangeMeterWindow;
                             Densitymeters.Add(newFl);
 
                         }
@@ -100,7 +111,12 @@ namespace FlowRecorder.MVVM.ViewModel
         }
         void OpenNewDensitymeterWindow()
         {
-            NewMeterViewModel model = new NewMeterViewModel(new Meter());
+            NewMeterViewModel model = new NewMeterViewModel(new Meter()
+            {
+                DeviceAddress = 1,
+                Ip = "10.57.137.224",
+                Port = 4001
+            });
             model.MeterCreated += AddNewDensitymeter;
 
             NewMeterWindow newFlowmeter = new NewMeterWindow(model);

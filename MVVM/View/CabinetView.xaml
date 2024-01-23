@@ -78,7 +78,7 @@
                 >
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <local:FlowmeterView
+                        <local:DensitymeterView
                             Margin="10"
                         />
                     </DataTemplate>

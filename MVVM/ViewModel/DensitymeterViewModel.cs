@@ -18,14 +18,13 @@ namespace FlowRecorder.MVVM.ViewModel
 
             densitymeterModel = model;
 
-            //densitymeterModel.InstantValueUpdated += (value) => { InstantValue = String.Format("{0:0.00}", value); };
-            //densitymeterModel.Connected += () => ChangeColorToConnected();
-            //densitymeterModel.Disconnected += () => ChangeColorToDisconnected();
+            densitymeterModel.TemperatureUpdated += (value) => { Temperature = String.Format("{0:0.00}", value); };
+            densitymeterModel.Connected += () => ChangeColorToConnected();
+            densitymeterModel.Disconnected += () => ChangeColorToDisconnected();
 
-            ChangeFlowmeter = new RelayCommand(obj =>
+            Edit = new RelayCommand(obj =>
             {
-                ChangeMeterClicked?.Invoke(densitymeterModel);
-                OutputLog.That("Click");
+                EditClicked?.Invoke(densitymeterModel);
             }
 
             );
@@ -43,17 +42,16 @@ namespace FlowRecorder.MVVM.ViewModel
             StatusColor = Brushes.Red;
         }
 
-        public Action<Meter> ChangeMeterClicked;
+        public Action<Meter> EditClicked;
         public string Description { get; set; }
 
-        public double AccumulatedValue { get; set; } = 0.0;
-        public string InstantValue { get { return instantValue; } set { instantValue = value; OnPropertyChanged(nameof(InstantValue)); } }
-        string instantValue;
+        public string Temperature { get { return temperature; } set { temperature = value; OnPropertyChanged(nameof(Temperature)); } }
+        string temperature;
 
         public string Ip { get { return densitymeterModel.Ip; } }
         public int Port { get { return densitymeterModel.Port; } }
 
-        public RelayCommand ChangeFlowmeter { get; set; }
+        public RelayCommand Edit  { get; set; }
 
         public event PropertyChangedEventHandler? PropertyChanged;
         public void OnPropertyChanged(string propertyName)

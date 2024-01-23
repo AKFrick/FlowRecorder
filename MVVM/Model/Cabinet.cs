@@ -35,11 +35,15 @@ namespace FlowRecorder.MVVM.Model
         {
             foreach (Flowmeter flowmeter in Flowmeters)
                 flowmeter.Start();
+            foreach (Densitymeter densitymeter in Densitymeters)
+                densitymeter.Start();
         }
         public void Stop()
         {
             foreach(Flowmeter flowmeter in Flowmeters)
                 flowmeter.Stop();
+            foreach (Densitymeter densitymeter in Densitymeters)
+                densitymeter.Stop();
         }
 
         public string Description { get; set; }        
