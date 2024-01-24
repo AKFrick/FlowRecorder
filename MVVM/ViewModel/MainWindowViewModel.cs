@@ -17,8 +17,9 @@ using System.Runtime.Serialization;
 
 namespace FlowRecorder.MVVM.ViewModel
 {
-    public class MainWindowViewModel
+    public class MainWindowViewModel        
     {
+        static public bool ProgrammableMode { get; set; } = false;
         public MainWindowViewModel()
         {
             #region LOG
@@ -143,10 +144,9 @@ namespace FlowRecorder.MVVM.ViewModel
 
         void btnStartClick() 
         {
-            cabinetsModel[0].Start();
 
-            //foreach (var cab in cabinetsModel)
-            //     cab.Start();
+            foreach (var cab in cabinetsModel)
+                cab.Start();
         }
         public RelayCommand BtnStop { get; set; }
         void btnStopClick()         

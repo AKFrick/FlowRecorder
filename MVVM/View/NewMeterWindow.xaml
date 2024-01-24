@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
         Title="NewFlowmeter" Height="400" Width="320">
-    <Grid >
+    <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
             <ColumnDefinition Width="150"/>
@@ -28,16 +28,16 @@
                FontSize="16"/>
 
         <Label Content="Обозначение" Grid.Column="0" Grid.Row="1" FontSize="15" Margin="5"/>
-        <TextBox Text="{Binding NewFlowmeter.Description}" Grid.Column="1" Grid.Row="1" FontSize="15"  Margin="5" MaxLength="15"/>
+        <TextBox Text="{Binding NewMeter.Description}" Grid.Column="1" Grid.Row="1" FontSize="15"  Margin="5" MaxLength="15"/>
 
         <Label Content="IP адресс MOXA" Grid.Column="0" Grid.Row="2" FontSize="15" Margin="5"/>
-        <TextBox Text="{Binding NewFlowmeter.Ip}" Grid.Column="1" Grid.Row="2" FontSize="15"  Margin="5" MaxLength="15"/>
+        <TextBox Text="{Binding NewMeter.Ip}" Grid.Column="1" Grid.Row="2" FontSize="15"  Margin="5" MaxLength="15"/>
 
         <Label Content="Порт MOXA" Grid.Column="0" Grid.Row="3" FontSize="15" Margin="5"/>
-        <TextBox Text="{Binding NewFlowmeter.Port}" Grid.Column="1" Grid.Row="3" FontSize="15"  Margin="5" MaxLength="15"/>
+        <TextBox Text="{Binding NewMeter.Port}" Grid.Column="1" Grid.Row="3" FontSize="15"  Margin="5" MaxLength="15"/>
 
         <Label Content="Адрес устройства" Grid.Column="0" Grid.Row="4" FontSize="15" Margin="5"/>
-        <TextBox Text="{Binding NewFlowmeter.DeviceAddress}" Grid.Column="1" Grid.Row="4" FontSize="15"  Margin="5" MaxLength="15"/>
+        <TextBox Text="{Binding NewMeter.DeviceAddress}" Grid.Column="1" Grid.Row="4" FontSize="15"  Margin="5" MaxLength="15"/>
 
         <Button Command="{Binding Create}" Grid.Row="5" Grid.Column="1" Margin="5" Width="Auto" Height="40" Content="Сохранить" />
         

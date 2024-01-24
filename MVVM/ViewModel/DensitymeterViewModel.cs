@@ -18,7 +18,9 @@ namespace FlowRecorder.MVVM.ViewModel
 
             densitymeterModel = model;
 
-            densitymeterModel.TemperatureUpdated += (value) => { Temperature = String.Format("{0:0.00}", value); };
+            densitymeterModel.TemperatureUpdated += (value) => { Temperature = String.Format("{0:0.0}", value); };
+            densitymeterModel.DensityUpdated += (value) => { Density = String.Format("{0:0.00}", value); };
+
             densitymeterModel.Connected += () => ChangeColorToConnected();
             densitymeterModel.Disconnected += () => ChangeColorToDisconnected();
 
@@ -47,6 +49,8 @@ namespace FlowRecorder.MVVM.ViewModel
 
         public string Temperature { get { return temperature; } set { temperature = value; OnPropertyChanged(nameof(Temperature)); } }
         string temperature;
+        public string Density { get { return density; } set { density = value; OnPropertyChanged(nameof(Density)); } }
+        string density;
 
         public string Ip { get { return densitymeterModel.Ip; } }
         public int Port { get { return densitymeterModel.Port; } }

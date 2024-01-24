@@ -20,9 +20,9 @@ namespace FlowRecorder.MVVM.View
     {
         public NewMeterWindow(NewMeterViewModel viewModel)
         {
+            DataContext = viewModel;
             InitializeComponent();
             viewModel.MeterCreated += (meter) => Close();
-            DataContext = viewModel;
         }
     }
 }

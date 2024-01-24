@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FlowRecorder.MVVM.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -13,5 +14,17 @@ namespace FlowRecorder
     /// </summary>
     public partial class App : Application
     {
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            if(e.Args.Length > 0)
+            {
+                if(e.Args[0] == "programode")
+                {
+                    MainWindowViewModel.ProgrammableMode = true;
+                    CabinetViewModel.ProgrammableMode = true;
+                }
+            }
+            base.OnStartup(e);
+        }
     }
 }

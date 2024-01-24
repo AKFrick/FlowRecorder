@@ -6,11 +6,11 @@
         xmlns:local="clr-namespace:FlowRecorder"
         xmlns:view="clr-namespace:FlowRecorder.MVVM.View"
         mc:Ignorable="d"
-        Title="MainWindow" Height="800" Width="1185"
+        Title="MainWindow" Height="800" Width="800"
         WindowStartupLocation="CenterScreen"
         Icon="/Resources/promatis.ico"
         WindowStyle="None"    
-        ResizeMode="CanMinimize"
+        ResizeMode="CanResize"
         >
 
     <!--Main grid-->
@@ -18,7 +18,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="4*"/>
             <RowDefinition Height="auto"/>
-            <RowDefinition Height="170"/>
+            <RowDefinition Height="0"/>
         </Grid.RowDefinitions>
 
         <!--Main-->
@@ -101,7 +101,9 @@
 
                 <!--Content-->
                 <Grid Grid.Column="1">
-                    <view:CabinetList/>
+                    <Viewbox>
+                        <view:CabinetList Width="Auto"  Height="Auto"/>
+                    </Viewbox>
                 </Grid>
             </Grid>
         </Border>

@@ -65,10 +65,6 @@ namespace FlowRecorder.MVVM.Model
                 {
                     ushort[] data = master.ReadInputRegisters(slaveID, Data.StartAddress, Data.NumOfPoint);
 
-                    //ValueRead?.Invoke(ModbusUtility.GetSingle(holding_register[4], holding_register[5]));
-
-                    //ValueRead?.Invoke(holding_register[23]);
-                    //
                     DataRead?.Invoke(data);
 
 
@@ -105,6 +101,7 @@ namespace FlowRecorder.MVVM.Model
             catch (Exception ex)
             {
                 OutputLog.That($"{Name}: {ex.Message} : {ex.GetType()}");
+                RetryConnect();
             }
             finally
             {

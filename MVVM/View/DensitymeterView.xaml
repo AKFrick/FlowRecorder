@@ -37,16 +37,17 @@
                     HorizontalAlignment="Center" VerticalAlignment="Center">
 
                     <TextBlock 
-                    Text="{Binding Temperature}" 
+                    Text="{Binding Density}" 
                     VerticalAlignment="Center"
-                    Foreground="White"             
-                    FontSize="65"
+                    Foreground="Yellow"             
+                    FontSize="55"
                     />
 
                     <Label
-                    Foreground="White"             
-                    FontSize="65"
-                    Content="°C"
+                    Foreground="Yellow"             
+                    FontSize="20"
+                    VerticalAlignment="Bottom"
+                    Content="мм в ст."
                     />
                 </StackPanel>
                 
@@ -59,13 +60,14 @@
                     <TextBlock 
                     Text="{Binding Temperature}" 
                     VerticalAlignment="Center"
-                    Foreground="White"             
-                    FontSize="65"
+                    Foreground="Yellow"             
+                    FontSize="55"
                     />
 
                     <Label
-                    Foreground="White"             
-                    FontSize="65"
+                    Foreground="Yellow"             
+                    FontSize="20"
+                    VerticalAlignment="Bottom"
                     Content="°C"
                     />
                     

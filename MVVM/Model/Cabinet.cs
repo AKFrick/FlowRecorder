@@ -9,6 +9,7 @@ namespace FlowRecorder.MVVM.Model
     [Serializable]
     public class Cabinet
     {
+
         public Cabinet()
         {
             Flowmeters = new();

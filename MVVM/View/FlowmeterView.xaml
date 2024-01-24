@@ -33,13 +33,14 @@
                 <TextBlock 
                 Text="{Binding AccumulatedValue}" 
                 VerticalAlignment="Center"
-                Foreground="White"             
-                FontSize="65"
+                Foreground="Yellow"             
+                FontSize="55"
             />
 
                 <Label
-                Foreground="White"             
-                FontSize="65"
+                Foreground="Yellow"             
+                FontSize="20"
+                VerticalAlignment="Bottom"
                 Content="м3"
             />
             </StackPanel>
@@ -51,12 +52,12 @@
             >
                 <TextBlock 
                 Text="{Binding InstantValue}" 
-                Foreground="White" 
+                Foreground="Yellow" 
                 VerticalAlignment="Center"
                 FontSize="20"           
             />
                 <Label
-                Foreground="White"      
+                Foreground="Yellow"      
                 VerticalAlignment="Center"
                 FontSize="20"
                 Content="м3/ч"
@@ -72,7 +73,7 @@
             BorderThickness="0"  
             Margin="5,5,10,5"
             HorizontalContentAlignment="Right"
-            Command="{Binding ChangeFlowmeter}"
+            Command="{Binding EditFlowmeter}"
             >
                 <TextBlock
                 Foreground="#768C9E"                  

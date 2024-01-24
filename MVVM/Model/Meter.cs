@@ -33,7 +33,7 @@ namespace FlowRecorder.MVVM.Model
         public event Action Disconnected;
         [field: NonSerialized]
         protected DataToRead dataToRead;
-
+        
         protected virtual void getValues(ushort[] data) { }
 
         [field: NonSerialized] 

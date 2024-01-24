@@ -6,7 +6,11 @@
              xmlns:local="clr-namespace:FlowRecorder.MVVM.View"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="1000">
-
+    
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolToVis" />
+    </UserControl.Resources>
+    
     <Grid Background="Transparent">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="auto"/>
@@ -58,6 +62,7 @@
                 Background="Transparent"
                 BorderThickness="0"  
                 Command="{Binding AddFlowmeterCommand}"
+                 Visibility="{Binding Path=ProgrammableMode, Converter={StaticResource BoolToVis}}"
                 >
             <TextBlock
                 Foreground="#768C9E"
@@ -88,6 +93,7 @@
                 Background="Transparent"
                 BorderThickness="0"  
                 Command="{Binding AddDensitymeterCommand}"
+                Visibility="{Binding Path=ProgrammableMode, Converter={StaticResource BoolToVis}}"
                 >
                 <TextBlock
                 Foreground="#768C9E"

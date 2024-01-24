@@ -14,6 +14,7 @@ namespace FlowRecorder.MVVM.ViewModel
 {
     public class CabinetViewModel 
     {
+        static public bool ProgrammableMode { get; set; } = false;
         public CabinetViewModel(Cabinet cabinet)
         {     
             Flowmeters = new ObservableCollection<FlowmeterViewModel>();
@@ -23,14 +24,14 @@ namespace FlowRecorder.MVVM.ViewModel
             foreach(var densitymeter in cabinet.Densitymeters)
             {
                 var newDen = new DensitymeterViewModel(densitymeter);
-                newDen.EditClicked += OpenChangeMeterWindow;
+                newDen.EditClicked += OpenEditFlowmeterWindow;
                 Densitymeters.Add(newDen);
             }
 
             foreach (var flowmeter in cabinet.Flowmeters)
             {
                 var newFl = new FlowmeterViewModel(flowmeter);
-                newFl.ChangeFlowmeterClicked += OpenChangeMeterWindow;
+                newFl.EditFlowmeterClicked += OpenEditFlowmeterWindow;
                 Flowmeters.Add(newFl);
 
             }    
@@ -49,7 +50,7 @@ namespace FlowRecorder.MVVM.ViewModel
                         foreach (Flowmeter item in a.NewItems)
                         {
                             var newFl = new FlowmeterViewModel(item);
-                            newFl.ChangeFlowmeterClicked += OpenChangeMeterWindow;
+                            newFl.EditFlowmeterClicked += OpenEditFlowmeterWindow;
                             Flowmeters.Add(newFl);
 
                         }
@@ -70,7 +71,7 @@ namespace FlowRecorder.MVVM.ViewModel
                         foreach (Densitymeter item in a.NewItems)
                         {
                             var newFl = new DensitymeterViewModel(item);
-                            newFl.EditClicked += OpenChangeMeterWindow;
+                            newFl.EditClicked += OpenEditFlowmeterWindow;
                             Densitymeters.Add(newFl);
 
                         }
@@ -135,13 +136,11 @@ namespace FlowRecorder.MVVM.ViewModel
         }
 
         //ИЗМЕНЕНИЕ РАСХОДОМЕРА   
-        void OpenChangeMeterWindow(Meter meter)
+        void OpenEditFlowmeterWindow(Meter meter)
         {
-            OutputLog.That("Subscr");
             NewMeterViewModel model = new NewMeterViewModel(meter);
-            //model.FlowmeterCreated += AddNewFlowmeter;
 
-            NewMeterWindow newFlowmeter = new NewMeterWindow(model);
+            NewMeterWindow newFlowmeter = new NewMeterWindow(model);                 
             newFlowmeter.ShowDialog();
         }
 

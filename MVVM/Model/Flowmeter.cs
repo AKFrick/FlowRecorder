@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Text;
 using FlowRecorder.MVVM.Db;
+using NModbus.Utility;
 
 
 namespace FlowRecorder.MVVM.Model
@@ -30,7 +28,8 @@ namespace FlowRecorder.MVVM.Model
 
         protected override void getValues(ushort[] data)
         {
-            InstantValue = data[26];
+            InstantValue = ModbusUtility.GetSingle(data[12], data[11]);
+            AccumulatedValue = ModbusUtility.GetUInt32(data[24], data[23]);
         }
         void checkValueToSave(double newFlowValue)
         {
@@ -47,21 +46,32 @@ namespace FlowRecorder.MVVM.Model
                 vFlow = flow,
                 vDensity = Densitymeter.Density,
             });
-        }        
-        public double AccumulatedValue { get; set; } = 0.0;
+        }
+        public uint AccumulatedValue
+        {
+            get { return accumulatedValue; }
+            set
+            {
+                checkValueToSave(value);
+                accumulatedValue = value; AccumulatedValueUpdated(accumulatedValue);
+            }
+        }
+        [field: NonSerialized]
+        uint accumulatedValue;
         public double InstantValue 
         { 
             get { return instantValue; } 
             set 
-            { 
-                checkValueToSave(value);
-                instantValue = value; InstantValueUpdated(instantValue); 
+            {                 
+               instantValue = value; InstantValueUpdated(instantValue); 
             } 
         }
         [field: NonSerialized]
         double instantValue;
         [field:NonSerialized]
         public event Action<double> InstantValueUpdated;
+        [field: NonSerialized]
+        public event Action<uint> AccumulatedValueUpdated;
         [field: NonSerialized]
         public Densitymeter Densitymeter { get; set; }
     }

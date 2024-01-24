@@ -18,14 +18,14 @@ namespace FlowRecorder.MVVM.ViewModel
 
             flowmeterModel = model;
 
-            flowmeterModel.InstantValueUpdated += (value) => { InstantValue = String.Format("{0:0.00}", value); };   
+            flowmeterModel.InstantValueUpdated += (value) => { InstantValue = String.Format("{0:0.00}", value); }; 
+            flowmeterModel.AccumulatedValueUpdated += (value) => { AccumulatedValue = value.ToString(); };
             flowmeterModel.Connected += () => ChangeColorToConnected();
             flowmeterModel.Disconnected += () => ChangeColorToDisconnected();
 
-            ChangeFlowmeter = new RelayCommand(obj =>
+            EditFlowmeter = new RelayCommand(obj =>
             {
-                ChangeFlowmeterClicked?.Invoke(flowmeterModel);
-                OutputLog.That("Click");
+                EditFlowmeterClicked?.Invoke(flowmeterModel);
             }
             
             );
@@ -44,17 +44,23 @@ namespace FlowRecorder.MVVM.ViewModel
             StatusColor = Brushes.Red;
         }
 
-        public Action<Flowmeter> ChangeFlowmeterClicked;
+        public Action<Flowmeter> EditFlowmeterClicked;
         public string Description { get; set; }                
 
-        public double AccumulatedValue { get; set; } = 0.0;
+        public string AccumulatedValue { get { return accumulatedValue; } set { accumulatedValue = value; OnPropertyChanged(nameof(AccumulatedValue)); } }
+        string accumulatedValue;
+
         public string InstantValue { get { return instantValue; } set { instantValue = value; OnPropertyChanged(nameof(InstantValue)); } }
         string instantValue;
 
         public string Ip { get { return flowmeterModel.Ip; } }
         public int Port { get { return flowmeterModel.Port; } }
+        public void UpdateInfo()
+        {
+            OnPropertyChanged(nameof(Ip));                    
+        }
 
-        public RelayCommand ChangeFlowmeter { get; set; }
+        public RelayCommand EditFlowmeter { get; set; }
 
         public event PropertyChangedEventHandler? PropertyChanged;
         public void OnPropertyChanged(string propertyName)

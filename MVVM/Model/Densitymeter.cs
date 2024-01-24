@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using NModbus.Utility;
 
 namespace FlowRecorder.MVVM.Model
 {
@@ -26,14 +23,15 @@ namespace FlowRecorder.MVVM.Model
 
         protected override void getValues(ushort[] data)
         {
-            Temperature = data[0];
+            Temperature = ModbusUtility.GetSingle(data[3], data[2]); 
+            Density = ModbusUtility.GetSingle(data[1], data[0]);
         }
 
         [field: NonSerialized]
         public event Action<double> TemperatureUpdated;
         public double Temperature
         {
-            get { return instantValue; }
+            get { return temperature; }
             set
             {
                 temperature = value; TemperatureUpdated(temperature);
@@ -41,9 +39,18 @@ namespace FlowRecorder.MVVM.Model
         }
         [field: NonSerialized]
         double temperature;
+
         [field: NonSerialized]
-        double instantValue;
+        public event Action<double> DensityUpdated;
+        public double Density
+        {
+            get { return density; }
+            set
+            {
+                density = value; DensityUpdated(density);
+            }
+        }
         [field: NonSerialized]
-        public double Density { get; set; }
+        double density;
     }
 }
