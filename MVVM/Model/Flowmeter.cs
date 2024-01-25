@@ -14,6 +14,9 @@ namespace FlowRecorder.MVVM.Model
             this.Ip = meter.Ip;
             this.Port = meter.Port;
             this.DeviceAddress = meter.DeviceAddress;
+            this.FlowDeltaRecording = meter.FlowDeltaRecording;
+            this.TimeIntervalRecording = meter.TimeIntervalRecording;
+            this.UpdateInterval = meter.UpdateInterval;
 
             dataToRead = new()
             {
@@ -21,10 +24,20 @@ namespace FlowRecorder.MVVM.Model
                 NumOfPoint = 33,
                 FunctionCode = DataToRead.FunctionCodes.ReadInput,
             };
-        }   
+        }
+        public string CabinetName { get; set; }
+        [field:NonSerialized]
+        public int NodeCode { get; set; } = 0;
+
+        public void AddDensityMeter(Densitymeter densitymeter)
+        {
+            densitymeter.TemperatureUpdated += (value) => { temp = value; };
+            densitymeter.DensityUpdated += (value) => { dens = value; };
+            Densitymeter = densitymeter;
+        }
 
         double prevSavedValue = 0;
-        double diffToSave = 1;
+        DateTime prevRecord;
 
         protected override void getValues(ushort[] data)
         {
@@ -33,18 +46,24 @@ namespace FlowRecorder.MVVM.Model
         }
         void checkValueToSave(double newFlowValue)
         {
-            if ( Math.Abs(newFlowValue - prevSavedValue) > diffToSave)
+            TimeSpan ts = DateTime.Now - prevRecord;
+
+            if ((Math.Abs(newFlowValue - prevSavedValue) > FlowDeltaRecording)
+                || (ts.TotalMilliseconds > TimeIntervalRecording))
             {
                 prevSavedValue = newFlowValue;
-                //saveToDb(newFlowValue);
+                prevRecord = DateTime.Now;  
+                saveToDb(newFlowValue);
             }
         }
         void saveToDb(double flow)
         {
             DatabaseControl.SaveFlowData(new DataForHLS()
             {
+                NodeCode = NodeCode,
+                DTRecording = DateTime.Now,
                 vFlow = flow,
-                vDensity = Densitymeter.Density,
+                vDensity = dens,
             });
         }
         public uint AccumulatedValue
@@ -68,11 +87,15 @@ namespace FlowRecorder.MVVM.Model
         }
         [field: NonSerialized]
         double instantValue;
+
+        double temp;
+        double dens;
+
         [field:NonSerialized]
         public event Action<double> InstantValueUpdated;
         [field: NonSerialized]
         public event Action<uint> AccumulatedValueUpdated;
         [field: NonSerialized]
-        public Densitymeter Densitymeter { get; set; }
+        public Densitymeter Densitymeter;
     }
 }

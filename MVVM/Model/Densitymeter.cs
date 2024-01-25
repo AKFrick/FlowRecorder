@@ -12,6 +12,9 @@ namespace FlowRecorder.MVVM.Model
             this.Ip = meter.Ip;
             this.Port = meter.Port;
             this.DeviceAddress = meter.DeviceAddress;
+            this.FlowDeltaRecording = meter.FlowDeltaRecording;
+            this.TimeIntervalRecording = meter.TimeIntervalRecording;
+            this.UpdateInterval = meter.UpdateInterval;
 
             dataToRead = new()
             {

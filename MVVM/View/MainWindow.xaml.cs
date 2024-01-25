@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 using FlowRecorder.MVVM.Model;
 using FlowRecorder.MVVM.ViewModel;
 
+
 namespace FlowRecorder
 {
     /// <summary>
@@ -28,7 +29,9 @@ namespace FlowRecorder
 
             MainWindowViewModel viewModel = new MainWindowViewModel();
             this.DataContext = viewModel;
+
+            
         }
-       
+
     }
 }

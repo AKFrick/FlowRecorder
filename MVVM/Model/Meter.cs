@@ -13,9 +13,14 @@ namespace FlowRecorder.MVVM.Model
         public string Ip { get; set; } = "192.168.10.254";
         public int Port { get; set; } = 4001;
         public byte DeviceAddress { get; set; } = 1;
+
+        public int TimeIntervalRecording { get; set; } = 60000;
+        public int FlowDeltaRecording { get; set; } = 1;
+
+        public int UpdateInterval { get; set; } = 1000;
         public void Start()
         {
-            reader = new(Description, Ip, Port, DeviceAddress, dataToRead);
+            reader = new(Description, Ip, Port, DeviceAddress, dataToRead, UpdateInterval);
             reader.Connected += Connected;
             reader.Disconnected += Disconnected;
             reader.DataRead += getValues;
@@ -24,7 +29,8 @@ namespace FlowRecorder.MVVM.Model
         }
         public void Stop()
         {
-            reader.StopReading();
+            
+            reader?.StopReading();
         }
 
         [field: NonSerialized]

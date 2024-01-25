@@ -22,6 +22,11 @@ namespace FlowRecorder.MVVM.Model
         }
         public void AddNewFlowmeter(Flowmeter flowmeter)
         {
+            flowmeter.CabinetName = Description;
+            flowmeter.NodeCode = Flowmeters.Count + NodeCode + 1;
+            if (Densitymeters.Count > 0)
+                flowmeter.AddDensityMeter(Densitymeters[0]);
+
             Flowmeters.Add(flowmeter);
         }
         public void AddNewDensityMeter(Densitymeter densitymeter)
@@ -29,7 +34,7 @@ namespace FlowRecorder.MVVM.Model
             Densitymeters.Add(densitymeter);
 
             foreach (var meter in Flowmeters)
-                meter.Densitymeter = densitymeter;
+                meter.AddDensityMeter(densitymeter);                
         }
 
         public void Start()
@@ -50,6 +55,8 @@ namespace FlowRecorder.MVVM.Model
         public string Description { get; set; }        
         public ObservableCollection<Flowmeter> Flowmeters { get; set; }
         public ObservableCollection<Densitymeter> Densitymeters { get; set; }
+        [field:NonSerialized]
+        public int NodeCode { get; set; } = 10;
 
     }
 }

@@ -15,7 +15,6 @@ namespace FlowRecorder.MVVM.Db
         {
             using (AppDbContext db = new())
             {
-                data.DTRecording = DateTime.Now;
                 db.DataForHLS.Add(data);                
                 db.SaveChanges();
 
@@ -37,14 +36,16 @@ namespace FlowRecorder.MVVM.Db
                         db.MeterNode.Add(new MeterNode()
                         {
                             NodeName = flowmeter.Description,
+                            CabinetName = flowmeter.CabinetName,
 
                             FlowMeterAddrIP = flowmeter.Ip,
-                            DensityMeterAddrIP = "",
+                            DensityMeterAddrIP = flowmeter.Densitymeter.Ip,
                             FlowMeterAddrModbus = flowmeter.DeviceAddress,
-                            FlowUpdateTimeInterval = 0,
-                            DensityUpdateTimeInterval = 0,
-                            TimeIntervalRecording = 0,
-                            FlowDeltaRecording = 0
+                            FlowUpdateTimeInterval = flowmeter.UpdateInterval,
+                            DensityUpdateTimeInterval = flowmeter.UpdateInterval,
+                            TimeIntervalRecording = flowmeter.TimeIntervalRecording,
+                            FlowDeltaRecording = flowmeter.FlowDeltaRecording,
+                            NodeCode = flowmeter.NodeCode,
                         }); 
                     }                    
                 }

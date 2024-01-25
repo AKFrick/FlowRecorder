@@ -77,6 +77,7 @@ namespace FlowRecorder.MVVM.ViewModel
                         {
                             Cabinet cab = new Cabinet()
                             {
+                                NodeCode = (cabinetsModel.Count + 1) * 10,
                                 Description = bincabinet.Description
                             };
                             foreach (var binDensitymeter in bincabinet.Densitymeters)
@@ -87,6 +88,9 @@ namespace FlowRecorder.MVVM.ViewModel
                                     Ip = binDensitymeter.Ip,
                                     Port = binDensitymeter.Port,
                                     DeviceAddress = binDensitymeter.DeviceAddress,
+                                    FlowDeltaRecording = binDensitymeter.FlowDeltaRecording,
+                                    TimeIntervalRecording = binDensitymeter.TimeIntervalRecording, 
+                                    UpdateInterval = binDensitymeter.UpdateInterval,                                    
                                 });
 
                                 cab.AddNewDensityMeter(dens);
@@ -100,6 +104,9 @@ namespace FlowRecorder.MVVM.ViewModel
                                     Ip = binflowmeter.Ip,
                                     Port = binflowmeter.Port,
                                     DeviceAddress = binflowmeter.DeviceAddress,
+                                    FlowDeltaRecording = binflowmeter.FlowDeltaRecording,
+                                    TimeIntervalRecording = binflowmeter.TimeIntervalRecording,
+                                    UpdateInterval = binflowmeter.UpdateInterval,
                                 });
                                                                 
                                 cab.AddNewFlowmeter(flow);
@@ -138,7 +145,7 @@ namespace FlowRecorder.MVVM.ViewModel
             {
                 binFormat.Serialize(fStream, cabinetsModel);
             }
-            //DatabaseControl.SaveMeterNodes(cabinetsModel);
+            DatabaseControl.SaveMeterNodes(cabinetsModel);
         }
         public RelayCommand BtnStart { get; set; }
 
@@ -152,7 +159,7 @@ namespace FlowRecorder.MVVM.ViewModel
         void btnStopClick()         
         {
             foreach (var cabinet in cabinetsModel)
-               cabinet.Stop();
+               cabinet.Stop();           
         }
         public RelayCommand AddCabinet { get; set; }
         void addCabinetClick()

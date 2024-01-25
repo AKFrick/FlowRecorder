@@ -18,6 +18,9 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
@@ -39,7 +42,16 @@
         <Label Content="Адрес устройства" Grid.Column="0" Grid.Row="4" FontSize="15" Margin="5"/>
         <TextBox Text="{Binding NewMeter.DeviceAddress}" Grid.Column="1" Grid.Row="4" FontSize="15"  Margin="5" MaxLength="15"/>
 
-        <Button Command="{Binding Create}" Grid.Row="5" Grid.Column="1" Margin="5" Width="Auto" Height="40" Content="Сохранить" />
+        <Label Content="Период опроса" Grid.Column="0" Grid.Row="5" FontSize="15" Margin="5"/>
+        <TextBox Text="{Binding NewMeter.UpdateInterval}" Grid.Column="1" Grid.Row="5" FontSize="15"  Margin="5" MaxLength="15"/>
+
+        <Label Content="Разница объёма" Grid.Column="0" Grid.Row="6" FontSize="15" Margin="5"/>
+        <TextBox Text="{Binding NewMeter.FlowDeltaRecording}" Grid.Column="7" Grid.Row="6" FontSize="15"  Margin="5" MaxLength="15"/>
+
+        <Label Content="Период записи" Grid.Column="0" Grid.Row="7" FontSize="15" Margin="5"/>
+        <TextBox Text="{Binding NewMeter.TimeIntervalRecording}" Grid.Column="1" Grid.Row="7" FontSize="15"  Margin="5" MaxLength="15"/>
+
+        <Button Command="{Binding Create}" Grid.Row="8" Grid.Column="1" Margin="5" Width="Auto" Height="40" Content="Сохранить" />
         
     </Grid>
 </Window>

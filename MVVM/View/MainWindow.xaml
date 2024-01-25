@@ -9,7 +9,7 @@
         Title="MainWindow" Height="800" Width="800"
         WindowStartupLocation="CenterScreen"
         Icon="/Resources/promatis.ico"
-        WindowStyle="None"    
+        WindowStyle="ToolWindow"   
         ResizeMode="CanResize"
         >
 
@@ -101,7 +101,7 @@
 
                 <!--Content-->
                 <Grid Grid.Column="1">
-                    <Viewbox>
+                    <Viewbox VerticalAlignment="Top">
                         <view:CabinetList Width="Auto"  Height="Auto"/>
                     </Viewbox>
                 </Grid>

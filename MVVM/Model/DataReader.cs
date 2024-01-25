@@ -22,14 +22,27 @@ namespace FlowRecorder.MVVM.Model
         CancellationTokenSource tokenSource2;
         CancellationToken ct;
 
-        public DataReader(string Name, string Ip, int Port, byte SlaveID, DataToRead Data)
+        public DataReader(string Name, string Ip, int Port, byte SlaveID, DataToRead Data, int UpdateInterval)
         {
             factory = new();
             this.Name = Name;
             this.Ip = Ip;
             this.Port = Port;
             this.slaveID = SlaveID;  
-            this.Data = Data;   
+            this.Data = Data;
+
+            if (UpdateInterval > 20000)
+            {
+                this.UpdateInterval = 20000;
+            }
+            else if (UpdateInterval < 500)
+            {
+                this.UpdateInterval = 500;
+            }
+            else
+            {
+                this.UpdateInterval = UpdateInterval;
+            }
         }
 
         public string Name { get; private set; }
@@ -37,6 +50,7 @@ namespace FlowRecorder.MVVM.Model
         DataToRead Data { get; set; }
         string Ip;
         int Port;
+        int UpdateInterval;
 
         public event Action<ushort[]> DataRead; //Сделать массивом, для того, чтобы считывать и расходомер и плотномер
         public event Action Connected;
@@ -73,7 +87,7 @@ namespace FlowRecorder.MVVM.Model
                         ct.ThrowIfCancellationRequested();
                     }
 
-                    Thread.Sleep(1000);
+                    Thread.Sleep(UpdateInterval);
                 }
 
             }, ct);
@@ -112,7 +126,14 @@ namespace FlowRecorder.MVVM.Model
 
         public void StopReading()
         {
-            tokenSource2.Cancel();
+            try
+            {
+                tokenSource2.Cancel();
+            }
+            catch (Exception ex)
+            {
+                OutputLog.That($"{Name} {ex.Message}");
+            }
         }
 
         async void RetryConnect()
